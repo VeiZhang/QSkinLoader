@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".activity.SkinByInstalledAPKActivity">
         </activity>
+        <activity android:name=".activity.SkinLanguageActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">SkinLoader</string>
 
-    <string name="hello">你好</string>
-    <string name="hello_night">Night</string>
+    <string name="hello">Hello</string>
 
     <string name="language">Language</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.excellence.skinloader;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -8,15 +9,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
+import com.excellence.basetoolslibrary.utils.ActivityUtils;
 import com.excellence.skinloader.activity.SkinByAPKFileActivity;
 import com.excellence.skinloader.activity.SkinByInstalledAPKActivity;
 import com.excellence.skinloader.activity.SkinBySuffixActivity;
+import com.excellence.skinloader.activity.SkinLanguageActivity;
 import com.excellence.skinloader.fragment.MainFragment;
 import com.excellence.skinloader.skin.BaseActivity;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener
 {
-	private String[] mNames = new String[] { "当前APK内后缀换肤", "未安装的资源APK换肤", "已安装的APK换肤" };
+	private String[] mNames = new String[] { "当前APK内后缀换肤", "未安装的资源APK换肤", "已安装的APK换肤", "语言切换" };
 	private GridView mGridView = null;
 
 	@Override
@@ -45,15 +48,19 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 		switch (position)
 		{
 		case 0:
-			startActivity(new Intent(MainActivity.this, SkinBySuffixActivity.class));
+			ActivityUtils.startAnotherActivity(MainActivity.this, SkinBySuffixActivity.class);
 			break;
 
 		case 1:
-			startActivity(new Intent(MainActivity.this, SkinByAPKFileActivity.class));
+			ActivityUtils.startAnotherActivity(MainActivity.this, SkinByAPKFileActivity.class);
 			break;
 
 		case 2:
-			startActivity(new Intent(MainActivity.this, SkinByInstalledAPKActivity.class));
+			ActivityUtils.startAnotherActivity(MainActivity.this, SkinByInstalledAPKActivity.class);
+			break;
+
+		case 3:
+			ActivityUtils.startAnotherActivity(MainActivity.this, SkinLanguageActivity.class);
 			break;
 		}
 	}

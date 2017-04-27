@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">SkinResource</string>
 
+    <!--- 当前语言en，则不能在写value-zh:strings.xml里，可以写成strings_zh.xml-->
+    <!-- 先根据当前系统语言选择什么语言的value：strings.xml，然后再遍历出后缀的字符串 -->
     <string name="hello_round">Round</string>
     <string name="hello_blue">Blue</string>
     <string name="hello_red">Red</string>
-    <string name="hello">hello</string>
+    <string name="hello">你好</string>
 
 </resources>
