@@ -50,9 +50,7 @@ public class SkinLanguageActivity extends BaseActivity implements AdapterView.On
 		}
 		getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
-		System.out.println(getResources().getConfiguration().locale);
-
-		SkinChangeHelper.getInstance().changeSkinByPackageSuffix(getPackageName(), "", new SkinChangeHelper.OnSkinChangeListener()
+		SkinChangeHelper.getInstance().changeLanguageConfigByPackageSuffix(getPackageName(), "", new SkinChangeHelper.OnSkinChangeListener()
 		{
 			@Override
 			public void onSuccess()

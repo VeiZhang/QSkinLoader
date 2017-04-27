@@ -96,4 +96,12 @@ public class SkinAttrFactory {
         }
         mSupportAttrHandler.remove(attrName);
     }
+
+	/**
+	 * 移除所有的属性支持
+	 */
+	public static void removeAllSkinAttrHandler()
+	{
+        mSupportAttrHandler.clear();
+	}
 }

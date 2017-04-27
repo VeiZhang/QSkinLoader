@@ -21,4 +21,10 @@ public class SkinConstant {
 
     /**默认皮肤*/
     public static final String DEFAULT_SKIN = "default";
+
+    /**
+     * 语言标识
+     */
+    public static final String CUSTOM_LANGUAGE_IDENTIFIER = PACKAGE_NAME + ".CUSTOM_LANGUAGE_IDENTIFIER";
+    public static final String CUSTOM_LANGUAGE_LOCAL = PACKAGE_NAME + ".CUSTOM_LANGUAGE_LOCAL";
 }

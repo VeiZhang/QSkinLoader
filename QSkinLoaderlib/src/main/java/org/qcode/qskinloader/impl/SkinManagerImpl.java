@@ -2,6 +2,7 @@ package org.qcode.qskinloader.impl;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,6 +23,7 @@ import org.qcode.qskinloader.entity.SkinAttrSet;
 import org.qcode.qskinloader.resourceloader.ILoadResourceCallback;
 import org.qcode.qskinloader.resourceloader.ResourceManager;
 import org.qcode.qskinloader.resourceloader.impl.APKResourceLoader;
+import org.qcode.qskinloader.resourceloader.impl.LanguageResourceLoader;
 
 import java.util.List;
 
@@ -83,7 +85,7 @@ public class SkinManagerImpl implements ISkinManager {
         refreshAllSkin();
 
         if (loadListener != null) {
-            loadListener.onLoadSuccess(defaultSkinIdentifier, null);
+            loadListener.onSkinLoadSuccess(defaultSkinIdentifier, null);
         }
     }
 
@@ -98,6 +100,58 @@ public class SkinManagerImpl implements ISkinManager {
     @Override
     public void loadAPKSkin(String skinPath, ILoadSkinListener loadListener) {
         loadSkin(skinPath, new APKResourceLoader(mContext), loadListener);
+    }
+
+    @Override
+    public void loadSkin(final String skinIdentifier,
+                         final IResourceLoader resourceLoader,
+                         final ILoadSkinListener loadListener) {
+        if(StringUtils.isEmpty(skinIdentifier)
+                || null == resourceLoader) {
+            if(null != loadListener) {
+                loadListener.onLoadFail(skinIdentifier);
+            }
+            return;
+        }
+
+        //当前皮肤就是将要换肤的皮肤，则不执行后续行为
+        if (skinIdentifier.equals(mResourceManager.getSkinIdentifier())) {
+            Logging.d(TAG, "load()| current skin matches target, do nothing");
+            if(null != loadListener) {
+                loadListener.onSkinLoadSuccess(skinIdentifier, null);
+            }
+            return;
+        }
+
+        resourceLoader.loadResource(skinIdentifier, new ILoadResourceCallback() {
+            @Override
+            public void onLoadStart(String identifier) {
+                if (loadListener != null) {
+                    loadListener.onLoadStart(skinIdentifier);
+                }
+            }
+
+            @Override
+            public void onLoadSuccess(String identifier, IResourceManager result) {
+                Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
+                mResourceManager.setBaseResource(identifier, result);
+
+                refreshAllSkin();
+
+                Logging.d(TAG, "onSkinLoadSuccess()| notify update");
+                if (loadListener != null) {
+                    loadListener.onSkinLoadSuccess(skinIdentifier, null);
+                }
+            }
+
+            @Override
+            public void onLoadFail(String identifier, int errorCode) {
+                mResourceManager.setBaseResource(null, null);
+                if (loadListener != null) {
+                    loadListener.onLoadFail(skinIdentifier);
+                }
+            }
+        });
     }
 
     @Override
@@ -124,7 +178,7 @@ public class SkinManagerImpl implements ISkinManager {
             Logging.d(TAG, "load()| current skin matches target, do nothing");
             if(null != loadListener) {
                 // 需要保存皮肤标识、后缀标识，后缀标识可为空
-                loadListener.onLoadSuccess(skinIdentifier, suffix);
+                loadListener.onSkinLoadSuccess(skinIdentifier, suffix);
             }
             return;
         }
@@ -139,15 +193,83 @@ public class SkinManagerImpl implements ISkinManager {
 
             @Override
             public void onLoadSuccess(String identifier, IResourceManager result) {
-                Logging.d(TAG, "onLoadSuccess() | identifier= " + identifier);
+                Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
                 mResourceManager.setBaseResource(identifier, result);
 
                 refreshAllSkin();
 
-                Logging.d(TAG, "onLoadSuccess()| notify update");
+                Logging.d(TAG, "onSkinLoadSuccess()| notify update");
                 if (loadListener != null) {
                     // 需要保存皮肤标识、后缀标识，后缀标识可为空
-                    loadListener.onLoadSuccess(skinIdentifier, suffix);
+                    loadListener.onSkinLoadSuccess(skinIdentifier, suffix);
+                }
+            }
+
+            @Override
+            public void onLoadFail(String identifier, int errorCode) {
+                mResourceManager.setBaseResource(null, null);
+                if (loadListener != null) {
+                    loadListener.onLoadFail(newSkinIdentifier);
+                }
+            }
+        });
+	}
+
+	@Override
+	public void loadLanguageSkin(String packageName, String local, String suffix, ILoadSkinListener loadListener)
+	{
+		loadLanguage(packageName, local, suffix, new LanguageResourceLoader(mContext, local, suffix), loadListener);
+	}
+
+    /**
+     *
+     * @param skinIdentifier 包名标识
+     * @param languageLocal 语言标识
+     * @param suffix 后缀标识
+     * @param resourceLoader
+     * @param loadListener
+     */
+	private void loadLanguage(final String skinIdentifier, final String languageLocal, final String suffix, IResourceLoader resourceLoader, final ILoadSkinListener loadListener)
+	{
+        // 加载已安装的资源包中带后缀，需要加上suffix
+        final String newSkinIdentifier = skinIdentifier + suffix + "_" + languageLocal;
+        if(StringUtils.isEmpty(newSkinIdentifier)
+                || null == resourceLoader) {
+            if(null != loadListener) {
+                loadListener.onLoadFail(newSkinIdentifier);
+            }
+            return;
+        }
+
+        //当前语言就是将要切换的语言，则不执行后续行为
+        if (newSkinIdentifier.equals(mResourceManager.getSkinIdentifier())) {
+            Logging.d(TAG, "load()| current language matches target, do nothing");
+            if(null != loadListener) {
+                // 需要保存包名标识、语言标识
+                loadListener.onLanguageLoadSuccess(newSkinIdentifier, languageLocal);
+            }
+            return;
+        }
+
+        resourceLoader.loadResource(skinIdentifier, new ILoadResourceCallback() {
+            @Override
+            public void onLoadStart(String identifier) {
+                if (loadListener != null) {
+                    loadListener.onLoadStart(newSkinIdentifier);
+                }
+            }
+
+            @Override
+            public void onLoadSuccess(String identifier, IResourceManager result) {
+                Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
+                mResourceManager.setBaseResource(identifier, result);
+
+                refreshAllSkin();
+
+                Logging.d(TAG, "onSkinLoadSuccess()| notify update");
+                if (loadListener != null) {
+                    // 需要保存皮肤标识、后缀标识，后缀标识可为空
+                    loadListener.onLanguageLoadSuccess(newSkinIdentifier, languageLocal);
                 }
             }
 
@@ -162,55 +284,8 @@ public class SkinManagerImpl implements ISkinManager {
 	}
 
     @Override
-    public void loadSkin(final String skinIdentifier,
-                         final IResourceLoader resourceLoader,
-                         final ILoadSkinListener loadListener) {
-        if(StringUtils.isEmpty(skinIdentifier)
-                || null == resourceLoader) {
-            if(null != loadListener) {
-                loadListener.onLoadFail(skinIdentifier);
-            }
-            return;
-        }
-
-        //当前皮肤就是将要换肤的皮肤，则不执行后续行为
-        if (skinIdentifier.equals(mResourceManager.getSkinIdentifier())) {
-            Logging.d(TAG, "load()| current skin matches target, do nothing");
-            if(null != loadListener) {
-                loadListener.onLoadSuccess(skinIdentifier, null);
-            }
-            return;
-        }
-
-        resourceLoader.loadResource(skinIdentifier, new ILoadResourceCallback() {
-            @Override
-            public void onLoadStart(String identifier) {
-                if (loadListener != null) {
-                    loadListener.onLoadStart(skinIdentifier);
-                }
-            }
-
-            @Override
-            public void onLoadSuccess(String identifier, IResourceManager result) {
-                Logging.d(TAG, "onLoadSuccess() | identifier= " + identifier);
-                mResourceManager.setBaseResource(identifier, result);
-
-                refreshAllSkin();
-
-                Logging.d(TAG, "onLoadSuccess()| notify update");
-                if (loadListener != null) {
-                    loadListener.onLoadSuccess(skinIdentifier, null);
-                }
-            }
-
-            @Override
-            public void onLoadFail(String identifier, int errorCode) {
-                mResourceManager.setBaseResource(null, null);
-                if (loadListener != null) {
-                    loadListener.onLoadFail(skinIdentifier);
-                }
-            }
-        });
+    public void loadLanguageSkin(String local, @Nullable String suffix, ILoadSkinListener loadListener) {
+        //loadSkin(packageName, local, new LanguageResourceLoader(mContext, local, suffix), loadListener);
     }
 
     @Override

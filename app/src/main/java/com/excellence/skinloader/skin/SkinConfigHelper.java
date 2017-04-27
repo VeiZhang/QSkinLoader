@@ -48,4 +48,24 @@ public class SkinConfigHelper {
     public static boolean isDefaultSkin() {
         return SkinConstant.DEFAULT_SKIN.equals(getSkinIdentifier());
     }
+
+	/**
+	 * 保存语言的标识
+	 */
+	public static void saveLanguageIdentifier(String identifier)
+	{
+		Settings.getInstance().setSetting(SkinConstant.CUSTOM_LANGUAGE_IDENTIFIER, identifier);
+	}
+
+	/**
+	 * 保存语言标识
+	 *
+	 * @param local
+	 */
+	public static void saveLanguageLocal(String local)
+	{
+		if (TextUtils.isEmpty(local) || local.equalsIgnoreCase("null"))
+			local = "";
+		Settings.getInstance().setSetting(SkinConstant.CUSTOM_LANGUAGE_LOCAL, local);
+	}
 }

@@ -27,7 +27,16 @@ public interface ILoadSkinListener {
      * @param skinIdentifier 皮肤标识
      * @param suffix 后缀标识
      */
-    void onLoadSuccess(String skinIdentifier, String suffix);
+    void onSkinLoadSuccess(String skinIdentifier, String suffix);
+
+    /**
+     * 语言切换完成
+     * 需要保存语言标识
+     *
+     * @param languageIdentifier
+     * @param local
+     */
+    void onLanguageLoadSuccess(String languageIdentifier, String local);
 
     /***
      * 加载皮肤失败

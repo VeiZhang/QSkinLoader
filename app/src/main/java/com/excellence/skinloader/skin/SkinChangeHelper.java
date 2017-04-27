@@ -4,6 +4,9 @@ import java.io.File;
 
 import org.qcode.qskinloader.ILoadSkinListener;
 import org.qcode.qskinloader.SkinManager;
+import org.qcode.qskinloader.attrhandler.SkinAttrFactory;
+import org.qcode.qskinloader.attrhandler.TextAttrHandler;
+import org.qcode.qskinloader.entity.SkinAttrName;
 import org.qcode.qskinloader.resourceloader.impl.ConfigChangeResourceLoader;
 import org.qcode.qskinloader.resourceloader.impl.SuffixResourceLoader;
 
@@ -98,6 +101,16 @@ public class SkinChangeHelper {
                 skin.getAbsolutePath(), new MyLoadSkinListener(listener));
     }
 
+    public void changeLanguageConfigByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
+    {
+        mIsSwitching = true;
+        mIsDefaultMode = false;
+        SkinAttrFactory.removeAllSkinAttrHandler();
+        SkinAttrFactory.registerSkinAttrHandler(SkinAttrName.TEXT, new TextAttrHandler());
+        String local = mContext.getResources().getConfiguration().locale.toString();
+        SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new MyLoadSkinListener(listener));
+    }
+
     public void changeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
     {
         mIsSwitching = true;
@@ -134,7 +147,7 @@ public class SkinChangeHelper {
         }
 
         @Override
-        public void onLoadSuccess(String skinIdentifier, String suffix) {
+        public void onSkinLoadSuccess(String skinIdentifier, String suffix) {
             mIsSwitching = false;
 
             //存储皮肤标识
@@ -150,6 +163,25 @@ public class SkinChangeHelper {
                 }
             });
         }
+
+		@Override
+		public void onLanguageLoadSuccess(String languageIdentifier, String local)
+		{
+            mIsSwitching = false;
+
+            // 存储语言标识
+            SkinConfigHelper.saveLanguageIdentifier(languageIdentifier);
+            SkinConfigHelper.saveLanguageLocal(local);
+
+            UITaskRunner.getHandler().post(new Runnable() {
+                @Override
+                public void run() {
+                    if(null != mListener) {
+                        mListener.onSuccess();
+                    }
+                }
+            });
+		}
 
         @Override
         public void onLoadFail(String skinIdentifier) {

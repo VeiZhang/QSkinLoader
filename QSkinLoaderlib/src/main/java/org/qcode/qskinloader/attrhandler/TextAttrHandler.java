@@ -18,7 +18,7 @@ import org.qcode.qskinloader.entity.SkinConstant;
  * </pre>
  */
 
-class TextAttrHandler implements ISkinAttrHandler
+public class TextAttrHandler implements ISkinAttrHandler
 {
 	@Override
 	public void apply(View view, SkinAttr skinAttr, IResourceManager resourceManager)
