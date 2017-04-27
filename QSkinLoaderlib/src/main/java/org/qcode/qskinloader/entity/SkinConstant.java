@@ -23,4 +23,7 @@ public class SkinConstant {
     /**界面元素支持换肤的属性*/
     public static final String ATTR_SKIN_ENABLE = "enable";
 
+    /**属性值对应的类型是string**/
+    public static final String RES_TYPE_NAME_TEXT = "string";
+
 }

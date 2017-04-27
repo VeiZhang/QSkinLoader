@@ -9,10 +9,20 @@
     skin:enable="true"
     tools:context="com.excellence.skinloader.MainActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        skin:enable="true"/>
+
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
         skin:enable="true">
     </GridView>
 

@@ -74,4 +74,10 @@ public class ConfigChangeResourceManager implements IResourceManager {
     public ColorStateList getColorStateList(int resId, String typeName, String resName) {
         return mResources.getColorStateList(resId);
     }
+
+	@Override
+	public String getString(int resId, String typeName, String resName)
+	{
+		return mResources.getString(resId);
+	}
 }

@@ -134,6 +134,23 @@ public class ResourceManager implements IResourceManager {
         return mDefaultResources.getDrawable(resId);
     }
 
+	@Override
+	public String getString(int resId, String typeName, String resName) throws Resources.NotFoundException
+	{
+		if (null != mBase)
+		{
+			try
+			{
+				return mBase.getString(resId, typeName, resName);
+			}
+			catch (Exception ex)
+			{
+				Logging.d(TAG, "getColorStateList()| error happened", ex);
+			}
+		}
+		return mDefaultResources.getString(resId);
+	}
+
     /**
      * 加载指定资源颜色drawable,转化为ColorStateList，保证selector类型的Color也能被转换。
      * 无皮肤包资源返回默认主题颜色

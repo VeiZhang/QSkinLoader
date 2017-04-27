@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SkinResource</string>
+
+    <string name="hello_round">Round</string>
+    <string name="hello_blue">Blue</string>
+    <string name="hello_red">Red</string>
+    <string name="hello">hello</string>
+
 </resources>

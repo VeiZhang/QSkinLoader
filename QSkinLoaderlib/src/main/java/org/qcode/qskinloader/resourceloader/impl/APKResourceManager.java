@@ -133,6 +133,15 @@ public class APKResourceManager implements IResourceManager {
         return colorList;
     }
 
+	@Override
+	public String getString(int resId, String typeName, String resName)
+	{
+		String trueResName = appendSuffix(resName);
+		int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
+		String text = mResources.getString(trueResId);
+		return text;
+	}
+
     private String getResKey(String skinPackageName, String resName) {
         return (null == skinPackageName ? "" : skinPackageName) + "_" + resName;
     }

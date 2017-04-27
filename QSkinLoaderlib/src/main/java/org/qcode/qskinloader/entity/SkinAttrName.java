@@ -15,4 +15,5 @@ public class SkinAttrName {
     public static final String DIVIDER = "divider";
     public static final String DRAW_SHADOW = "drawShadow";
     public static final String CLEAR_RECYCLER_VIEW = "clearRecyclerView";
+    public static final String TEXT = "text";
 }
