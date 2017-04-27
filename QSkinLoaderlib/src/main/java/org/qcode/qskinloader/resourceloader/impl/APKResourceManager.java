@@ -22,6 +22,7 @@ public class APKResourceManager implements IResourceManager {
     private Resources mDefaultResources;
     private String mPackageName;
     private Resources mResources;
+    private String mSuffix = null;
 
     private HashMapCache<String, Integer> mColorCache
             = new HashMapCache<String, Integer>(true);
@@ -31,6 +32,11 @@ public class APKResourceManager implements IResourceManager {
         mDefaultResources = mContext.getResources();
         mPackageName = pkgName;
         mResources = resources;
+    }
+
+    public APKResourceManager(Context context, String suffix, String pkgName, Resources resources) {
+        this(context, pkgName, resources);
+        mSuffix = suffix;
     }
 
     @Override
@@ -56,6 +62,7 @@ public class APKResourceManager implements IResourceManager {
 
     @Override
     public int getColor(int resId, String resName) {
+
         String resKey = getResKey(mPackageName, resName);
 
         Integer color = mColorCache.getCache(resKey);
@@ -63,8 +70,9 @@ public class APKResourceManager implements IResourceManager {
             return color;
         }
 
+        String trueResName = appendSuffix(resName);
         int trueResId = mResources.getIdentifier(
-                resName, SkinConstant.RES_TYPE_NAME_COLOR, mPackageName);
+                trueResName, SkinConstant.RES_TYPE_NAME_COLOR, mPackageName);
         int trueColor = mResources.getColor(trueResId);
         mColorCache.addCache(resKey, trueColor);
         return trueColor;
@@ -77,11 +85,12 @@ public class APKResourceManager implements IResourceManager {
 
     @SuppressLint("NewApi")
     public Drawable getDrawable(int resId, String resName) {
-        int trueResId = mResources.getIdentifier(resName,
+        String trueResName = appendSuffix(resName);
+        int trueResId = mResources.getIdentifier(trueResName,
                 SkinConstant.RES_TYPE_NAME_DRAWABLE, mPackageName);
 
         if (0 == trueResId) {
-            trueResId = mResources.getIdentifier(resName,
+            trueResId = mResources.getIdentifier(trueResName,
                     SkinConstant.RES_TYPE_NAME_MIPMAP, mPackageName);
             if (0 == trueResId) {
                 throw new Resources.NotFoundException(resName);
@@ -116,8 +125,9 @@ public class APKResourceManager implements IResourceManager {
 
     @Override
     public ColorStateList getColorStateList(int resId, String typeName, String resName) {
+        String trueResName = appendSuffix(resName);
         int trueResId = mResources.getIdentifier(
-                resName, typeName, mPackageName);
+                trueResName, typeName, mPackageName);
         ColorStateList colorList = mResources.getColorStateList(trueResId);
 
         return colorList;
@@ -125,5 +135,9 @@ public class APKResourceManager implements IResourceManager {
 
     private String getResKey(String skinPackageName, String resName) {
         return (null == skinPackageName ? "" : skinPackageName) + "_" + resName;
+    }
+
+    private String appendSuffix(String resName) {
+        return resName + mSuffix;
     }
 }

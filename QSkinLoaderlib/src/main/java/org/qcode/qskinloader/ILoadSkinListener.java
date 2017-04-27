@@ -20,12 +20,14 @@ public interface ILoadSkinListener {
 
     /***
      * 加载皮肤完成
+     * 需要保存皮肤标识、后缀标识，后缀标识可为空
      *
      * notify skin-loading success event
      *
-     * @param skinIdentifier
+     * @param skinIdentifier 皮肤标识
+     * @param suffix 后缀标识
      */
-    void onLoadSuccess(String skinIdentifier);
+    void onLoadSuccess(String skinIdentifier, String suffix);
 
     /***
      * 加载皮肤失败

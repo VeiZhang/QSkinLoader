@@ -45,6 +45,17 @@ public interface ISkinManager extends IObservable<IActivitySkinEventHandler> {
      */
     void loadAPKSkin(String skinPath, ILoadSkinListener loadListener);
 
+    /**
+     * VeiZhang
+     * 从指定的已经安装的APK包中加载皮肤
+     *
+     * @param packageName 安装包名
+     * @param suffix 资源后缀
+     * @param loadSkinListener
+     */
+    void loadAPKSkin(String packageName, String suffix, ILoadSkinListener loadSkinListener);
+    void loadSkin(String skinIdentifier, String suffix, IResourceLoader resourceLoader, ILoadSkinListener loadListener);
+
     /***
      * 加载指定的皮肤包，皮肤包以skinIdentifier标识，
      * 依靠resourceLoader加载，并通过loadListener告知皮肤切换结果。
