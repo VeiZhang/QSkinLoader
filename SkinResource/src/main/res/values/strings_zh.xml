@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--- 当前语言en，则不能在写value-zh:strings.xml里-->
+    <!-- 先根据当前系统语言选择什么语言的value：strings.xml，然后再遍历出后缀的字符串 -->
+
+    <string name="language_round">圆</string>
+    <string name="language_blue">蓝</string>
+    <string name="language_red">红</string>
+    <string name="language">语言</string>
+</resources>

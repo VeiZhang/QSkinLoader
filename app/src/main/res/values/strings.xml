@@ -3,4 +3,6 @@
 
     <string name="hello">你好</string>
     <string name="hello_night">Night</string>
+
+    <string name="language">Language</string>
 </resources>

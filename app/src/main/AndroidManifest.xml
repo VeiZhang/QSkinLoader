@@ -17,11 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SkinBySuffixActivity">
+        <activity android:name=".activity.SkinBySuffixActivity">
         </activity>
-        <activity android:name=".SkinByAPKFileActivity">
+        <activity android:name=".activity.SkinByAPKFileActivity">
         </activity>
-        <activity android:name=".SkinByInstalledAPKActivity">
+        <activity android:name=".activity.SkinByInstalledAPKActivity">
         </activity>
     </application>
 

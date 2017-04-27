@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/apk_bg"
     skin:enable="true"
-    tools:context="com.excellence.skinloader.SkinByAPKFileActivity">
+    tools:context="com.excellence.skinloader.activity.SkinByAPKFileActivity">
 
     <Button
         android:id="@+id/button"

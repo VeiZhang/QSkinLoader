@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/installed_apk_bg"
     skin:enable="true"
-    tools:context="com.excellence.skinloader.SkinByInstalledAPKActivity">
+    tools:context="com.excellence.skinloader.activity.SkinByInstalledAPKActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"

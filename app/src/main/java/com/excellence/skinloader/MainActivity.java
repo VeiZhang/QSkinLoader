@@ -8,6 +8,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
+import com.excellence.skinloader.activity.SkinByAPKFileActivity;
+import com.excellence.skinloader.activity.SkinByInstalledAPKActivity;
+import com.excellence.skinloader.activity.SkinBySuffixActivity;
+import com.excellence.skinloader.fragment.MainFragment;
 import com.excellence.skinloader.skin.BaseActivity;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener
@@ -20,6 +24,15 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		initView();
+	}
+
+	private void initView()
+	{
+		MainFragment fragment = new MainFragment();
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		transaction.add(R.id.frame_layout, fragment).commit();
 
 		mGridView = (GridView) findViewById(R.id.gridview);
 		mGridView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mNames));

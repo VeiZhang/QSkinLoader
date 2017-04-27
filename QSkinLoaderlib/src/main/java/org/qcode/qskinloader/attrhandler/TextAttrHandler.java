@@ -23,7 +23,6 @@ class TextAttrHandler implements ISkinAttrHandler
 	@Override
 	public void apply(View view, SkinAttr skinAttr, IResourceManager resourceManager)
 	{
-		System.out.println("===Text===");
 		if (null == view || null == skinAttr || !(SkinAttrName.TEXT.equals(skinAttr.mAttrName)))
 		{
 			return;

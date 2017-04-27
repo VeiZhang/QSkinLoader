@@ -1,10 +1,11 @@
-package com.excellence.skinloader;
+package com.excellence.skinloader.activity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.excellence.skinloader.R;
 import com.excellence.skinloader.skin.BaseActivity;
 import com.excellence.skinloader.skin.SkinChangeHelper;
 
