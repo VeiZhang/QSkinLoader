@@ -1,1 +1,1 @@
-include ':app', ':QSkinLoaderlib'
+include ':app', ':QSkinLoaderlib', ':SkinResource'

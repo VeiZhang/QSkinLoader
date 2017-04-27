@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.excellence.skinloader"
+<manifest package="com.excellence.skinresource"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".SkinLoaderApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,16 +11,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".SkinBySuffixActivity">
-        </activity>
-        <activity android:name=".SkinByAPKFileActivity">
-        </activity>
-        <activity android:name=".SkinByInstalledAPKActivity">
         </activity>
     </application>
 

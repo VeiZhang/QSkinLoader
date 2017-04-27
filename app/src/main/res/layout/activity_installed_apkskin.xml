@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/installed_apk_bg"
+    skin:enable="true"
+    tools:context="com.excellence.skinloader.SkinByInstalledAPKActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/round_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="点击换肤-后缀:round"
+            android:textColor="@color/installed_color"
+            skin:enable="true"/>
+
+        <Button
+            android:id="@+id/blue_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="点击换肤-后缀:blue"
+            android:textColor="@color/installed_color"
+            skin:enable="true"/>
+
+        <Button
+            android:id="@+id/red_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="点击换肤-后缀:red"
+            android:textColor="@color/installed_color"
+            skin:enable="true"/>
+
+        <Button
+            android:id="@+id/no_suffix_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="点击换肤-后缀:无"
+            android:textColor="@color/installed_color"
+            skin:enable="true"/>
+    </LinearLayout>
+</RelativeLayout>

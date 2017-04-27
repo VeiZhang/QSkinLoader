@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray_50">#505050</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
 
-    <color name="color_white">#FFFFFF</color>
-
-    <color name="color_text">#000000</color>
-    <color name="color_background">#FFFFFF</color>
-    <color name="color_item_normal_bg">@color/color_white</color>
-    <color name="color_item_press_bg">#EEEEEE</color>
-    <color name="activity_bg_color">#f3f4f5</color>
-
-    <color name="color_red">#FF0000</color>
-
-    <color name="color_transprent">#00000000</color>
-
-    <color name="night_shadow_color">@color/color_transprent</color>
+    <color name="gridview_color">#FF0099CC</color>
+    <color name="bg_color">#FFAA66CC</color>
+    <color name="image_color">#FF11E8CC</color>
+    <color name="btn_color">#FFFF0900</color>
+    <color name="installed_color">#99CC00</color>
 </resources>

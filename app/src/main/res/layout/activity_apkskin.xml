@@ -5,15 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/apk_bg"
     skin:enable="true"
-    tools:context="com.excellence.skinloader.MainActivity">
+    tools:context="com.excellence.skinloader.SkinByAPKFileActivity">
 
-    <GridView
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        skin:enable="true">
-    </GridView>
-
+        android:layout_centerInParent="true"
+        android:background="@color/btn_color"
+        android:text="点击换肤"
+        skin:enable="true"/>
 </RelativeLayout>
