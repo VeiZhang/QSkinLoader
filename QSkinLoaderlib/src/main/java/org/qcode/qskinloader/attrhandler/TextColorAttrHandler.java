@@ -36,6 +36,8 @@ class TextColorAttrHandler implements ISkinAttrHandler {
             //同时，context.getResources().getColorStateList()方法也可以取纯颜色生成一个ColorStateList
             ColorStateList textColor = resourceManager.getColorStateList(
                     skinAttr.mAttrValueRefId, skinAttr.mAttrValueTypeName, skinAttr.mAttrValueRefName);
+            if (textColor == null)
+                return;
             tv.setTextColor(textColor);
         }
 

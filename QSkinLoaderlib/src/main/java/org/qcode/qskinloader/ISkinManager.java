@@ -67,7 +67,7 @@ public interface ISkinManager extends IObservable<IActivitySkinEventHandler> {
      * @param loadListener
      */
     void loadLanguageSkin(String packageName, String local, @Nullable String suffix, ILoadSkinListener loadListener);
-    void loadLanguageSkin(String local, @Nullable String suffix, ILoadSkinListener loadListener);
+
     /***
      * 加载指定的皮肤包，皮肤包以skinIdentifier标识，
      * 依靠resourceLoader加载，并通过loadListener告知皮肤切换结果。

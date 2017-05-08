@@ -42,6 +42,8 @@ class ShadowAttrHandler implements ISkinAttrHandler {
             if (SkinConstant.RES_TYPE_NAME_COLOR.equals(skinAttr.mAttrValueTypeName)) {
                 int bgColor = resourceManager.getColor(
                         skinAttr.mAttrValueRefId, skinAttr.mAttrValueRefName);
+                if (bgColor == -1)
+                    return;
                 if (view instanceof ShadowImageView) {
                     ShadowImageView imageView = (ShadowImageView) view;
                     imageView.setShadowColor(bgColor);

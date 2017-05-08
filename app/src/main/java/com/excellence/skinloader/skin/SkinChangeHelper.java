@@ -1,18 +1,15 @@
 package com.excellence.skinloader.skin;
 
-import java.io.File;
-
-import org.qcode.qskinloader.ILoadSkinListener;
-import org.qcode.qskinloader.SkinManager;
-import org.qcode.qskinloader.attrhandler.SkinAttrFactory;
-import org.qcode.qskinloader.attrhandler.TextAttrHandler;
-import org.qcode.qskinloader.entity.SkinAttrName;
-import org.qcode.qskinloader.resourceloader.impl.ConfigChangeResourceLoader;
-import org.qcode.qskinloader.resourceloader.impl.SuffixResourceLoader;
-
 import android.content.Context;
 
 import com.excellence.skinloader.SkinLoaderApplication;
+
+import org.qcode.qskinloader.ILoadSkinListener;
+import org.qcode.qskinloader.SkinManager;
+import org.qcode.qskinloader.resourceloader.impl.ConfigChangeResourceLoader;
+import org.qcode.qskinloader.resourceloader.impl.SuffixResourceLoader;
+
+import java.io.File;
 
 /**
  * qqliu
@@ -105,8 +102,6 @@ public class SkinChangeHelper {
     {
         mIsSwitching = true;
         mIsDefaultMode = false;
-        SkinAttrFactory.removeAllSkinAttrHandler();
-        SkinAttrFactory.registerSkinAttrHandler(SkinAttrName.TEXT, new TextAttrHandler());
         String local = mContext.getResources().getConfiguration().locale.toString();
         SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new MyLoadSkinListener(listener));
     }

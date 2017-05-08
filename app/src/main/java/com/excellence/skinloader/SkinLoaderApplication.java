@@ -2,10 +2,14 @@ package com.excellence.skinloader;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.text.TextUtils;
 
 import com.excellence.skinloader.skin.Settings;
 import com.excellence.skinloader.skin.SkinChangeHelper;
 import com.excellence.skinloader.skin.SkinConfigHelper;
+
+import java.util.Locale;
 
 /**
  * <pre>
@@ -36,6 +40,15 @@ public class SkinLoaderApplication extends Application
 		 * </ul>
 		 */
 		SkinChangeHelper.getInstance().changeSkinByPackageSuffix(SkinConfigHelper.getSkinIdentifier(), SkinConfigHelper.getSkinIdentifierSuffix(), null);
+		// 恢复默认语言
+		Configuration config = getResources().getConfiguration();
+		Locale locale = Locale.getDefault();
+		String language = SkinConfigHelper.getLanguageLocal();
+		if (!TextUtils.isEmpty(language))
+			locale = new Locale(language);
+		config.setLocale(locale);
+		getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+		SkinChangeHelper.getInstance().changeLanguageConfigByPackageSuffix(getPackageName(), "", null);
 	}
 
 	public static Context getAppContext()

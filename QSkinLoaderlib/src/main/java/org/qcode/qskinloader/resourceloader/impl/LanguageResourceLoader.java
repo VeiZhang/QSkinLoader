@@ -115,11 +115,11 @@ public class LanguageResourceLoader implements IResourceLoader
                     if (loadCallBack != null) {
                         if (mSuffix == null)
                             loadCallBack.onLoadSuccess(mNewSkinIdentifier,
-                                    new APKResourceManager(
+                                    new LanguageResourceManager(
                                             mContext, result.pkgName, result.resources));
                         else
                             loadCallBack.onLoadSuccess(mNewSkinIdentifier,
-                                    new APKResourceManager(mContext, mSuffix, result.pkgName, result.resources));
+                                    new LanguageResourceManager(mContext, mSuffix, result.pkgName, result.resources));
                     }
                 } else {
                     if (loadCallBack != null) {

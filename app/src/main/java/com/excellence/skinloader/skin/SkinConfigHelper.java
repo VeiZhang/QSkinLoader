@@ -68,4 +68,9 @@ public class SkinConfigHelper {
 			local = "";
 		Settings.getInstance().setSetting(SkinConstant.CUSTOM_LANGUAGE_LOCAL, local);
 	}
+
+	public static String getLanguageLocal()
+    {
+        return Settings.getInstance().getString(SkinConstant.CUSTOM_LANGUAGE_LOCAL, null);
+    }
 }

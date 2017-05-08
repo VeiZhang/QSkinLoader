@@ -2,7 +2,6 @@ package org.qcode.qskinloader.impl;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -282,11 +281,6 @@ public class SkinManagerImpl implements ISkinManager {
             }
         });
 	}
-
-    @Override
-    public void loadLanguageSkin(String local, @Nullable String suffix, ILoadSkinListener loadListener) {
-        //loadSkin(packageName, local, new LanguageResourceLoader(mContext, local, suffix), loadListener);
-    }
 
     @Override
     public void applySkin(View view, boolean applyChild) {
