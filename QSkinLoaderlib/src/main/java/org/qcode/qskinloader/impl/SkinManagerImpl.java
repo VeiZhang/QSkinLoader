@@ -53,14 +53,16 @@ public class SkinManagerImpl implements ISkinManager {
     }
 
     private Context mContext;
-    private IResourceManager mResourceManager;
+    private IResourceManager mSkinResourceManager;
+    private IResourceManager mLanguageResourceManager;
 
     private Observable<IActivitySkinEventHandler> mObservable;
 
     @Override
     public void init(Context context) {
         mContext = context.getApplicationContext();
-        mResourceManager = new ResourceManager(mContext);
+        mSkinResourceManager = new ResourceManager(mContext);
+        mLanguageResourceManager = new ResourceManager(mContext);
         mObservable = new Observable<IActivitySkinEventHandler>();
         new AsyncTask<String, Void, Void>() {
 
@@ -79,7 +81,8 @@ public class SkinManagerImpl implements ISkinManager {
         }
 
         //恢复ResourceManager的行为
-        mResourceManager.setBaseResource(null, null);
+        mSkinResourceManager.setBaseResource(null, null);
+        mLanguageResourceManager.setBaseResource(null, null);
 
         refreshAllSkin();
         refreshAllLanguage();
@@ -121,7 +124,7 @@ public class SkinManagerImpl implements ISkinManager {
         }
 
         //当前皮肤就是将要换肤的皮肤，则不执行后续行为
-        if (skinIdentifier.equals(mResourceManager.getSkinIdentifier())) {
+        if (skinIdentifier.equals(mSkinResourceManager.getSkinIdentifier())) {
             Logging.d(TAG, "load()| current skin matches target, do nothing");
             if(null != loadListener) {
                 loadListener.onSkinLoadSuccess(skinIdentifier, null);
@@ -140,7 +143,7 @@ public class SkinManagerImpl implements ISkinManager {
             @Override
             public void onLoadSuccess(String identifier, IResourceManager result) {
                 Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
-                mResourceManager.setBaseResource(identifier, result);
+                mSkinResourceManager.setBaseResource(identifier, result);
 
                 refreshAllSkin();
 
@@ -152,7 +155,7 @@ public class SkinManagerImpl implements ISkinManager {
 
             @Override
             public void onLoadFail(String identifier, int errorCode) {
-                mResourceManager.setBaseResource(null, null);
+                mSkinResourceManager.setBaseResource(null, null);
                 if (loadListener != null) {
                     loadListener.onLoadFail(skinIdentifier);
                 }
@@ -180,7 +183,7 @@ public class SkinManagerImpl implements ISkinManager {
         }
 
         //当前皮肤就是将要换肤的皮肤，则不执行后续行为
-        if (newSkinIdentifier.equals(mResourceManager.getSkinIdentifier())) {
+        if (newSkinIdentifier.equals(mSkinResourceManager.getSkinIdentifier())) {
             Logging.d(TAG, "load()| current skin matches target, do nothing");
             if(null != loadListener) {
                 // 需要保存皮肤标识、后缀标识，后缀标识可为空
@@ -200,7 +203,7 @@ public class SkinManagerImpl implements ISkinManager {
             @Override
             public void onLoadSuccess(String identifier, IResourceManager result) {
                 Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
-                mResourceManager.setBaseResource(identifier, result);
+                mSkinResourceManager.setBaseResource(identifier, result);
 
                 refreshAllSkin();
 
@@ -213,7 +216,7 @@ public class SkinManagerImpl implements ISkinManager {
 
             @Override
             public void onLoadFail(String identifier, int errorCode) {
-                mResourceManager.setBaseResource(null, null);
+                mSkinResourceManager.setBaseResource(null, null);
                 if (loadListener != null) {
                     loadListener.onLoadFail(newSkinIdentifier);
                 }
@@ -248,7 +251,7 @@ public class SkinManagerImpl implements ISkinManager {
         }
 
         //当前语言就是将要切换的语言，则不执行后续行为
-        if (newSkinIdentifier.equals(mResourceManager.getSkinIdentifier())) {
+        if (newSkinIdentifier.equals(mLanguageResourceManager.getSkinIdentifier())) {
             Logging.d(TAG, "load()| current language matches target, do nothing");
             if(null != loadListener) {
                 // 需要保存包名标识、语言标识
@@ -268,7 +271,7 @@ public class SkinManagerImpl implements ISkinManager {
             @Override
             public void onLoadSuccess(String identifier, IResourceManager result) {
                 Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
-                mResourceManager.setBaseResource(identifier, result);
+                mLanguageResourceManager.setBaseResource(identifier, result);
 
                 refreshAllLanguage();
 
@@ -281,7 +284,7 @@ public class SkinManagerImpl implements ISkinManager {
 
             @Override
             public void onLoadFail(String identifier, int errorCode) {
-                mResourceManager.setBaseResource(null, null);
+                mLanguageResourceManager.setBaseResource(null, null);
                 if (loadListener != null) {
                     loadListener.onLoadFail(newSkinIdentifier);
                 }
@@ -296,7 +299,7 @@ public class SkinManagerImpl implements ISkinManager {
         }
 
         SkinAttrSet skinAttrSet = ViewSkinTagHelper.getSkinAttrs(view);
-        SkinAttrUtils.applySkinAttrs(view, skinAttrSet, mResourceManager);
+        SkinAttrUtils.applySkinAttrs(view, skinAttrSet, mSkinResourceManager);
 
         if (applyChild) {
             if (view instanceof ViewGroup) {
@@ -316,7 +319,7 @@ public class SkinManagerImpl implements ISkinManager {
         }
 
         SkinAttrSet skinAttrSet = ViewSkinTagHelper.getSkinAttrs(view);
-        SkinAttrUtils.applyLanguageAttrs(view, skinAttrSet, mResourceManager);
+        SkinAttrUtils.applyLanguageAttrs(view, skinAttrSet, mLanguageResourceManager);
 
         if (applyChild) {
             if (view instanceof ViewGroup) {
@@ -339,17 +342,27 @@ public class SkinManagerImpl implements ISkinManager {
         SkinAttrFactory.removeSkinAttrHandler(attrName);
     }
 
-    @Override
-    public void setResourceManager(IResourceManager resourceManager) {
-        if(null == resourceManager) {
+    public void setLanguageResourceManager(IResourceManager languageResourceManager)
+    {
+        if (null == languageResourceManager)
             return;
-        }
-        mResourceManager = resourceManager;
+        mLanguageResourceManager = languageResourceManager;
     }
 
-    @Override
-    public IResourceManager getResourceManager() {
-        return mResourceManager;
+    public IResourceManager getLanguageResourceManager()
+    {
+        return mLanguageResourceManager;
+    }
+
+    public void setSkinResourceManager(IResourceManager skinResourceManager) {
+        if(null == skinResourceManager) {
+            return;
+        }
+        mSkinResourceManager = skinResourceManager;
+    }
+
+    public IResourceManager getSkinResourceManager() {
+        return mSkinResourceManager;
     }
 
     @Override

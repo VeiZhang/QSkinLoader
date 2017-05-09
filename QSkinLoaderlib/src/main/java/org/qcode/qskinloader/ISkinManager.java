@@ -127,9 +127,9 @@ public interface ISkinManager extends IObservable<IActivitySkinEventHandler> {
      * 在属性处理器内收到替换的ResourceManager实现。
      *
      * set a IResourceManager object to framework to replace the default ResourceManager.
-     * @param resourceManager
+     * @param skinResourceManager
      */
-    void setResourceManager(IResourceManager resourceManager);
+    void setSkinResourceManager(IResourceManager skinResourceManager);
 
     /***
      * 获取框架内的资源管理器对象
@@ -137,5 +137,9 @@ public interface ISkinManager extends IObservable<IActivitySkinEventHandler> {
      * return the resource manager object used in framework.
      * @return
      */
-    IResourceManager getResourceManager();
+    IResourceManager getSkinResourceManager();
+
+    void setLanguageResourceManager(IResourceManager skinResourceManager);
+
+    IResourceManager getLanguageResourceManager();
 }

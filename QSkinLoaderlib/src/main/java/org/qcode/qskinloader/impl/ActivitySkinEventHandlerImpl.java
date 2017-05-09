@@ -81,11 +81,16 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
 
         Logging.d(TAG, "onViewCreated()");
 
-        if (!mSkinManager.getResourceManager().isDefault()) {
+        if (!mSkinManager.getSkinResourceManager().isDefault()) {
             View contentView = getContentView();
             mSkinManager.applySkin(contentView, true);
-            mSkinManager.applyLanguage(contentView, true);
             refreshWindowBg(contentView);
+        }
+
+        if (!mSkinManager.getLanguageResourceManager().isDefault())
+        {
+            View contentView = getContentView();
+            mSkinManager.applyLanguage(contentView, true);
         }
 
         mSkinManager.addObserver(this);
@@ -280,11 +285,11 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
         Drawable bgDrawable;
         try {
             bgDrawable = new ColorDrawable(
-                    mSkinManager.getResourceManager().getColor(mWindowBgResId));
+                    mSkinManager.getSkinResourceManager().getColor(mWindowBgResId));
 
         } catch (Resources.NotFoundException ex) {
             try {
-                bgDrawable = mSkinManager.getResourceManager().getDrawable(mWindowBgResId);
+                bgDrawable = mSkinManager.getSkinResourceManager().getDrawable(mWindowBgResId);
             } catch (Resources.NotFoundException e) {
                 return;
             }
