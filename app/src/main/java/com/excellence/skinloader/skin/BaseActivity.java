@@ -1,13 +1,13 @@
 package com.excellence.skinloader.skin;
 
-import org.qcode.qskinloader.IActivitySkinEventHandler;
-import org.qcode.qskinloader.ISkinActivity;
-import org.qcode.qskinloader.SkinManager;
-
 import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Window;
+
+import org.qcode.qskinloader.IActivitySkinEventHandler;
+import org.qcode.qskinloader.ISkinActivity;
+import org.qcode.qskinloader.SkinManager;
 
 /**
  * 所有Activity的父类；需要实现ISkinActivity接口
@@ -95,6 +95,11 @@ public abstract class BaseActivity extends Activity implements ISkinActivity {
     public void handleSkinChange() {
         //当前界面在换肤时收到的回调，可以在此回调内做一些其他事情；
         //比如：通知WebView内的页面切换到夜间模式等
+    }
+
+    @Override
+    public void handleLanguageChange() {
+
     }
 
     /**

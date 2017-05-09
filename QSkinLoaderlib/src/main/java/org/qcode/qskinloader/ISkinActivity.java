@@ -37,4 +37,9 @@ public interface ISkinActivity {
      * to notify activity doing something beyond the framework's ability.
      */
     void handleSkinChange();
+
+    /**
+     * 切换语言
+     */
+    void handleLanguageChange();
 }

@@ -8,6 +8,7 @@ import org.qcode.qskinloader.IResourceManager;
 import org.qcode.qskinloader.ISkinAttrHandler;
 import org.qcode.qskinloader.base.utils.CollectionUtils;
 import org.qcode.qskinloader.entity.SkinAttr;
+import org.qcode.qskinloader.entity.SkinAttrName;
 import org.qcode.qskinloader.entity.SkinAttrSet;
 import org.qcode.qskinloader.entity.SkinConstant;
 
@@ -72,5 +73,33 @@ public class SkinAttrUtils {
                 attrHandler.apply(view, attr, resourceManager);
             }
         }
+    }
+
+    /**
+     * 对View应用语言属性切换
+     *
+     * @param view
+     * @param skinAttrSet
+     * @param resourceManager
+     */
+    public static void applyLanguageAttrs(View view, SkinAttrSet skinAttrSet, IResourceManager resourceManager) {
+        if(null == view || null == skinAttrSet) {
+            return;
+        }
+
+		List<SkinAttr> attrArrayList = skinAttrSet.getAttrList();
+		if (CollectionUtils.isEmpty(attrArrayList)) {
+			return;
+		}
+
+		for (SkinAttr attr : attrArrayList) {
+            if (attr.mAttrName.equals(SkinAttrName.TEXT)) {
+                ISkinAttrHandler attrHandler = SkinAttrFactory.getSkinAttrHandler(attr.mAttrName);
+				if (null != attrHandler) {
+					attrHandler.apply(view, attr, resourceManager);
+				}
+				break;
+			}
+		}
     }
 }

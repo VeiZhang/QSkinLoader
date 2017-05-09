@@ -94,6 +94,15 @@ public interface ISkinManager extends IObservable<IActivitySkinEventHandler> {
      */
     void applySkin(View view, boolean applyChild);
 
+    /**
+     * VeiZhang
+     * 对View应用当前的语言设置，applyChild 表示对View的子元素设置语言
+     *
+     * @param view
+     * @param applyChild
+     */
+    void applyLanguage(View view, boolean applyChild);
+
     /***
      * 注册指定属性的处理器，可以通过此方法覆盖默认的属性处理器，也可以定义自定义属性的属性处理器
      *

@@ -84,6 +84,7 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
         if (!mSkinManager.getResourceManager().isDefault()) {
             View contentView = getContentView();
             mSkinManager.applySkin(contentView, true);
+            mSkinManager.applyLanguage(contentView, true);
             refreshWindowBg(contentView);
         }
 
@@ -113,6 +114,7 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
                 mNeedRefreshSkin = false;
                 //后台界面展示出来时再刷新
                 refreshSkin();
+                refreshLanguage();
             }
         }
     }
@@ -170,6 +172,22 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
     }
 
     @Override
+    public void handleLanguageUpdate() {
+        if (!mIsSupportSkinChange) {
+            Logging.d(TAG, "onThemeUpdate()| not support theme change: " + getClass().getSimpleName());
+            return;
+        }
+
+        if (mHasFocus || mSwitchSkinImmediately) {
+            mNeedRefreshSkin = false;
+            refreshLanguage();
+        } else {
+            //仅置位，不立刻刷新
+            mNeedRefreshSkin = true;
+        }
+    }
+
+    @Override
     public ISkinAttributeParser getSkinAttributeParser() {
         if(null == mSkinAttributeParser) {
             mSkinAttributeParser = new SkinAttributeParser();
@@ -212,6 +230,31 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
                 //通知Activity做其他刷新操作
                 if (activity instanceof ISkinActivity) {
                     ((ISkinActivity) activity).handleSkinChange();
+                }
+            }
+        });
+    }
+
+    private void refreshLanguage() {
+        if (!mIsSupportSkinChange) {
+            return;
+        }
+
+        if (null == mActivity) {
+            return;
+        }
+
+        final Activity activity = mActivity.get();
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                View contentView = getContentView();
+                mSkinManager.applyLanguage(contentView, true);
+
+                //通知Activity做其他刷新操作
+                if (activity instanceof ISkinActivity) {
+                    ((ISkinActivity) activity).handleLanguageChange();
                 }
             }
         });

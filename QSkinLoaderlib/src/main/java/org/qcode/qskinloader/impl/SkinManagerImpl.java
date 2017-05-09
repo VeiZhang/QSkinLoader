@@ -82,6 +82,7 @@ public class SkinManagerImpl implements ISkinManager {
         mResourceManager.setBaseResource(null, null);
 
         refreshAllSkin();
+        refreshAllLanguage();
 
         if (loadListener != null) {
             loadListener.onSkinLoadSuccess(defaultSkinIdentifier, null);
@@ -94,6 +95,12 @@ public class SkinManagerImpl implements ISkinManager {
 
         //刷新框架内维护的View的皮肤,包括Dialog/popWindow/悬浮窗等应用场景
         applyWindowViewSkin();
+    }
+
+    private void refreshAllLanguage()
+    {
+        /** VeiZhang 刷新语言 **/
+        refreshLanguage();
     }
 
     @Override
@@ -263,7 +270,7 @@ public class SkinManagerImpl implements ISkinManager {
                 Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
                 mResourceManager.setBaseResource(identifier, result);
 
-                refreshAllSkin();
+                refreshAllLanguage();
 
                 Logging.d(TAG, "onSkinLoadSuccess()| notify update");
                 if (loadListener != null) {
@@ -297,6 +304,26 @@ public class SkinManagerImpl implements ISkinManager {
                 ViewGroup viewGroup = (ViewGroup) view;
                 for (int i = 0; i < viewGroup.getChildCount(); i++) {
                     applySkin(viewGroup.getChildAt(i), true);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void applyLanguage(View view, boolean applyChild) {
+        if (null == view) {
+            return;
+        }
+
+        SkinAttrSet skinAttrSet = ViewSkinTagHelper.getSkinAttrs(view);
+        SkinAttrUtils.applyLanguageAttrs(view, skinAttrSet, mResourceManager);
+
+        if (applyChild) {
+            if (view instanceof ViewGroup) {
+                //遍历子元素应用皮肤
+                ViewGroup viewGroup = (ViewGroup) view;
+                for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                    applyLanguage(viewGroup.getChildAt(i), true);
                 }
             }
         }
@@ -363,6 +390,21 @@ public class SkinManagerImpl implements ISkinManager {
                     String identifier,
                     Object... params) {
                 handler.handleSkinUpdate();
+                return false;
+            }
+        }, null);
+    }
+
+    /** VeiZhang 通知语言切换 **/
+    private void refreshLanguage()
+    {
+        notifyUpdate(new INotifyUpdate<IActivitySkinEventHandler>() {
+            @Override
+            public boolean notifyEvent(
+                    IActivitySkinEventHandler handler,
+                    String identifier,
+                    Object... params) {
+                handler.handleLanguageUpdate();
                 return false;
             }
         }, null);

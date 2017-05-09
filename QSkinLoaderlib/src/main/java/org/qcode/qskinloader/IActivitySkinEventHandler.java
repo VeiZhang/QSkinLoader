@@ -139,6 +139,11 @@ public interface IActivitySkinEventHandler {
      */
     void handleSkinUpdate();
 
+    /**
+     * 语言更新
+     */
+    void handleLanguageUpdate();
+
     /***
      * 获取皮肤属性解析帮助类
      *
