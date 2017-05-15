@@ -1,4 +1,4 @@
-package com.iflytek.skin.manager.base.utils;
+package org.qcode.qskinloader.base.utils;
 
 import java.lang.ref.WeakReference;
 
