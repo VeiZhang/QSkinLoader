@@ -56,6 +56,7 @@ public class SkinManagerImpl implements ISkinManager {
     private Context mContext;
     private IResourceManager mSkinResourceManager;
     private IResourceManager mLanguageResourceManager;
+    private IResourceManager mSizeResourceManager;
 
     private Observable<IActivitySkinEventHandler> mObservable;
 
@@ -64,6 +65,7 @@ public class SkinManagerImpl implements ISkinManager {
         mContext = context.getApplicationContext();
         mSkinResourceManager = new ResourceManager(mContext);
         mLanguageResourceManager = new ResourceManager(mContext);
+        mSizeResourceManager = new ResourceManager(mContext);
         mObservable = new Observable<IActivitySkinEventHandler>();
         new AsyncTask<String, Void, Void>() {
 
@@ -84,6 +86,7 @@ public class SkinManagerImpl implements ISkinManager {
         //恢复ResourceManager的行为
         mSkinResourceManager.setBaseResource(null, null);
         mLanguageResourceManager.setBaseResource(null, null);
+        mSizeResourceManager.setBaseResource(null, null);
 
         refreshAllSkin();
         refreshAllLanguage();
@@ -325,7 +328,7 @@ public class SkinManagerImpl implements ISkinManager {
         }
 
         //当前文本大小就是将要切换的大小，则不执行后续行为
-        if (newSkinIdentifier.equals(mLanguageResourceManager.getSkinIdentifier())) {
+        if (newSkinIdentifier.equals(mSizeResourceManager.getSkinIdentifier())) {
             Logging.d(TAG, "load()| current language matches target, do nothing");
             if(null != loadListener) {
                 // 需要保存包名标识、大小标识
@@ -345,7 +348,7 @@ public class SkinManagerImpl implements ISkinManager {
             @Override
             public void onLoadSuccess(String identifier, IResourceManager result) {
                 Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
-                mLanguageResourceManager.setBaseResource(identifier, result);
+                mSizeResourceManager.setBaseResource(identifier, result);
 
                 refreshAllLanguage();
 
@@ -358,7 +361,7 @@ public class SkinManagerImpl implements ISkinManager {
 
             @Override
             public void onLoadFail(String identifier, int errorCode) {
-                mLanguageResourceManager.setBaseResource(null, null);
+                mSizeResourceManager.setBaseResource(null, null);
                 if (loadListener != null) {
                     loadListener.onLoadFail(newSkinIdentifier);
                 }
@@ -414,6 +417,16 @@ public class SkinManagerImpl implements ISkinManager {
     @Override
     public void unregisterSkinAttrHandler(String attrName) {
         SkinAttrFactory.removeSkinAttrHandler(attrName);
+    }
+
+    public void setSizeResourceManager(IResourceManager sizeResourceManager) {
+        if (null == sizeResourceManager)
+            return;
+        mSizeResourceManager = sizeResourceManager;
+    }
+
+    public IResourceManager getSizeResourceManager() {
+        return mSizeResourceManager;
     }
 
     public void setLanguageResourceManager(IResourceManager languageResourceManager)
