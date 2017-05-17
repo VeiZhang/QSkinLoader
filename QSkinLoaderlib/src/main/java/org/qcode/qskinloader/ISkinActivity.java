@@ -39,7 +39,10 @@ public interface ISkinActivity {
     void handleSkinChange();
 
     /**
+     * VeiZhang
      * 切换语言
      */
     void handleLanguageChange();
+
+    void handleSizeChange();
 }

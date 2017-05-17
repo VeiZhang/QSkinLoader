@@ -93,6 +93,12 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
             mSkinManager.applyLanguage(contentView, true);
         }
 
+        if (!mSkinManager.getSizeResourceManager().isDefault())
+        {
+            View contentView = getContentView();
+            mSkinManager.applySize(contentView, true);
+        }
+
         mSkinManager.addObserver(this);
     }
 
@@ -120,6 +126,7 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
                 //后台界面展示出来时再刷新
                 refreshSkin();
                 refreshLanguage();
+                refreshSize();
             }
         }
     }
@@ -193,6 +200,22 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
     }
 
     @Override
+    public void handleSizeUpdate() {
+        if (!mIsSupportSkinChange) {
+            Logging.d(TAG, "onThemeUpdate()| not support theme change: " + getClass().getSimpleName());
+            return;
+        }
+
+        if (mHasFocus || mSwitchSkinImmediately) {
+            mNeedRefreshSkin = false;
+            refreshSize();
+        } else {
+            //仅置位，不立刻刷新
+            mNeedRefreshSkin = true;
+        }
+    }
+
+    @Override
     public ISkinAttributeParser getSkinAttributeParser() {
         if(null == mSkinAttributeParser) {
             mSkinAttributeParser = new SkinAttributeParser();
@@ -240,6 +263,10 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
         });
     }
 
+    /**
+     * VeiZhang
+     * 刷新语言
+     */
     private void refreshLanguage() {
         if (!mIsSupportSkinChange) {
             return;
@@ -260,6 +287,35 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
                 //通知Activity做其他刷新操作
                 if (activity instanceof ISkinActivity) {
                     ((ISkinActivity) activity).handleLanguageChange();
+                }
+            }
+        });
+    }
+
+    /**
+     * VeiZhang
+     * 刷新字体大小
+     */
+    private void refreshSize() {
+        if (!mIsSupportSkinChange) {
+            return;
+        }
+
+        if (null == mActivity) {
+            return;
+        }
+
+        final Activity activity = mActivity.get();
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                View contentView = getContentView();
+                mSkinManager.applySize(contentView, true);
+                mSkinManager.applyWindowViewSize();
+                //通知Activity做其他刷新操作
+                if (activity instanceof ISkinActivity) {
+                    ((ISkinActivity) activity).handleSizeChange();
                 }
             }
         });

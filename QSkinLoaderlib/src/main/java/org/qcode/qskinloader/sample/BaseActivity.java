@@ -131,6 +131,14 @@ public abstract class BaseActivity extends Activity implements ISkinActivity
 	}
 
 	/**
+	 * 当前界面在切换字体大小时收到的回调
+	 */
+	@Override
+	public void handleSizeChange() {
+
+	}
+
+	/**
 	 * 告知当前界面Window的background资源，换肤时会寻找对应的资源替换
 	 */
 	protected int getWindowBackgroundResource()

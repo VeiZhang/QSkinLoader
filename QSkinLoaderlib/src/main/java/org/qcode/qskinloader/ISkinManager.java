@@ -113,6 +113,15 @@ public interface ISkinManager extends IObservable<IActivitySkinEventHandler> {
      */
     void applyLanguage(View view, boolean applyChild);
 
+    /**
+     * VeiZhang
+     * 对View应用当前的字体大小设置，applyChild 表示对View的子元素设置语言
+     *
+     * @param view
+     * @param applyChild
+     */
+    void applySize(View view, boolean applyChild);
+
     /***
      * 注册指定属性的处理器，可以通过此方法覆盖默认的属性处理器，也可以定义自定义属性的属性处理器
      *
@@ -149,7 +158,35 @@ public interface ISkinManager extends IObservable<IActivitySkinEventHandler> {
      */
     IResourceManager getSkinResourceManager();
 
+    /**
+     * VeiZhang
+     * 设置语言资源管理器
+     *
+     * @param skinResourceManager
+     */
     void setLanguageResourceManager(IResourceManager skinResourceManager);
 
+    /**
+     * VeiZhang
+     * 获取语言资源管理器
+     *
+     * @return
+     */
     IResourceManager getLanguageResourceManager();
+
+    /**
+     * VeiZhang
+     * 设置字体大小资源管理器
+     *
+     * @param sizeResourceManager
+     */
+    void setSizeResourceManager(IResourceManager sizeResourceManager);
+
+    /**
+     * VeiZhang
+     * 获取字体大小资源管理器
+     *
+     * @return
+     */
+    IResourceManager getSizeResourceManager();
 }

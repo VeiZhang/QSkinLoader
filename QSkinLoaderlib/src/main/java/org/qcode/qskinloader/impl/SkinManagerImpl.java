@@ -90,6 +90,7 @@ public class SkinManagerImpl implements ISkinManager {
 
         refreshAllSkin();
         refreshAllLanguage();
+        refreshAllSize();
 
         if (loadListener != null) {
             loadListener.onSkinLoadSuccess(defaultSkinIdentifier, null);
@@ -105,15 +106,29 @@ public class SkinManagerImpl implements ISkinManager {
     }
 
     /**
-     * VeiZhang 语言切换刷新
+     * VeiZhang
+     * 语言切换刷新
      */
     private void refreshAllLanguage()
     {
-        /** 刷新语言 **/
+        // 刷新正常的Activity内View的语言
         refreshLanguage();
 
-        /** VeiZhang **/
+        // 刷新框架内维护的View的语言,包括Dialog/popWindow/悬浮窗等应用场景
         applyWindowViewLanguage();
+    }
+
+    /**
+     * VeiZhang
+     * 字体大小切换
+     */
+    private void refreshAllSize()
+    {
+        // 刷新正常的Activity内View的字体大小
+        refreshSize();
+
+        // 刷新框架内维护的View的字体大小,包括Dialog/popWindow/悬浮窗等应用场景
+        applyWindowViewSize();
     }
 
     @Override
@@ -410,6 +425,26 @@ public class SkinManagerImpl implements ISkinManager {
     }
 
     @Override
+    public void applySize(View view, boolean applyChild) {
+        if (null == view) {
+            return;
+        }
+
+        SkinAttrSet skinAttrSet = ViewSkinTagHelper.getSkinAttrs(view);
+        SkinAttrUtils.applySizeAttrs(view, skinAttrSet, mSizeResourceManager);
+
+        if (applyChild) {
+            if (view instanceof ViewGroup) {
+                //遍历子元素应用皮肤
+                ViewGroup viewGroup = (ViewGroup) view;
+                for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                    applySize(viewGroup.getChildAt(i), true);
+                }
+            }
+        }
+    }
+
+    @Override
     public void registerSkinAttrHandler(String attrName, ISkinAttrHandler skinAttrHandler) {
         SkinAttrFactory.registerSkinAttrHandler(attrName, skinAttrHandler);
     }
@@ -419,16 +454,19 @@ public class SkinManagerImpl implements ISkinManager {
         SkinAttrFactory.removeSkinAttrHandler(attrName);
     }
 
+    @Override
     public void setSizeResourceManager(IResourceManager sizeResourceManager) {
         if (null == sizeResourceManager)
             return;
         mSizeResourceManager = sizeResourceManager;
     }
 
+    @Override
     public IResourceManager getSizeResourceManager() {
         return mSizeResourceManager;
     }
 
+    @Override
     public void setLanguageResourceManager(IResourceManager languageResourceManager)
     {
         if (null == languageResourceManager)
@@ -436,11 +474,13 @@ public class SkinManagerImpl implements ISkinManager {
         mLanguageResourceManager = languageResourceManager;
     }
 
+    @Override
     public IResourceManager getLanguageResourceManager()
     {
         return mLanguageResourceManager;
     }
 
+    @Override
     public void setSkinResourceManager(IResourceManager skinResourceManager) {
         if(null == skinResourceManager) {
             return;
@@ -448,6 +488,7 @@ public class SkinManagerImpl implements ISkinManager {
         mSkinResourceManager = skinResourceManager;
     }
 
+    @Override
     public IResourceManager getSkinResourceManager() {
         return mSkinResourceManager;
     }
@@ -479,6 +520,38 @@ public class SkinManagerImpl implements ISkinManager {
         }
     }
 
+    /**
+     * VeiZhang
+     * 通知Window上添加的View语言切换
+     */
+    public void applyWindowViewLanguage()
+    {
+        List<View> windowViewList = WindowViewManager.getInstance().getWindowViewList();
+        if(CollectionUtils.isEmpty(windowViewList)) {
+            return;
+        }
+
+        for(View view : windowViewList) {
+            applyLanguage(view, true);
+        }
+    }
+
+    /**
+     * VeiZhang
+     * 通知Window上添加的View字体大小切换
+     */
+    public void applyWindowViewSize()
+    {
+        List<View> windowViewList = WindowViewManager.getInstance().getWindowViewList();
+        if(CollectionUtils.isEmpty(windowViewList)) {
+            return;
+        }
+
+        for(View view : windowViewList) {
+            applySize(view, true);
+        }
+    }
+
     /***
      * 告知外部观察者当前皮肤发生了变化
      */
@@ -496,7 +569,8 @@ public class SkinManagerImpl implements ISkinManager {
     }
 
     /**
-     * VeiZhang 通知语言切换
+     * VeiZhang
+     * 通知语言切换
      */
     private void refreshLanguage()
     {
@@ -513,17 +587,21 @@ public class SkinManagerImpl implements ISkinManager {
     }
 
     /**
-     * VeiZhang 通知Window上添加的View语言切换
+     * VeiZhang
+     * 通知字体大小切换
      */
-    public void applyWindowViewLanguage()
+    private void refreshSize()
     {
-        List<View> windowViewList = WindowViewManager.getInstance().getWindowViewList();
-        if(CollectionUtils.isEmpty(windowViewList)) {
-            return;
-        }
-
-        for(View view : windowViewList) {
-            applyLanguage(view, true);
-        }
+        notifyUpdate(new INotifyUpdate<IActivitySkinEventHandler>() {
+            @Override
+            public boolean notifyEvent(
+                    IActivitySkinEventHandler handler,
+                    String identifier,
+                    Object... params) {
+                handler.handleSizeUpdate();
+                return false;
+            }
+        }, null);
     }
+
 }

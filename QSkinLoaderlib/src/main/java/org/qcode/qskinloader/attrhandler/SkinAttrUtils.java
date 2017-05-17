@@ -102,4 +102,32 @@ public class SkinAttrUtils {
 			}
 		}
     }
+
+    /**
+     * 对View应用字体大小属性切换
+     *
+     * @param view
+     * @param skinAttrSet
+     * @param resourceManager
+     */
+    public static void applySizeAttrs(View view, SkinAttrSet skinAttrSet, IResourceManager resourceManager) {
+        if(null == view || null == skinAttrSet) {
+            return;
+        }
+
+        List<SkinAttr> attrArrayList = skinAttrSet.getAttrList();
+        if (CollectionUtils.isEmpty(attrArrayList)) {
+            return;
+        }
+
+        for (SkinAttr attr : attrArrayList) {
+            if (attr.mAttrName.equals(SkinAttrName.TEXT_SIZE)) {
+                ISkinAttrHandler attrHandler = SkinAttrFactory.getSkinAttrHandler(attr.mAttrName);
+                if (null != attrHandler) {
+                    attrHandler.apply(view, attr, resourceManager);
+                }
+                break;
+            }
+        }
+    }
 }

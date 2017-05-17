@@ -140,9 +140,16 @@ public interface IActivitySkinEventHandler {
     void handleSkinUpdate();
 
     /**
+     * VeiZhang
      * 语言更新
      */
     void handleLanguageUpdate();
+
+    /**
+     * VeiZhang
+     * 字体大小更新
+     */
+    void handleSizeUpdate();
 
     /***
      * 获取皮肤属性解析帮助类
