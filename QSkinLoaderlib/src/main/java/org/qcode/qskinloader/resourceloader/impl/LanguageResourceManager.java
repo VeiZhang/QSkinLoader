@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import org.qcode.qskinloader.IResourceManager;
-import org.qcode.qskinloader.base.utils.HashMapCache;
 
 /**
  * <pre>
@@ -26,9 +25,6 @@ public class LanguageResourceManager implements IResourceManager {
     private String mPackageName;
     private Resources mResources;
     private String mSuffix = null;
-
-    private HashMapCache<String, Integer> mColorCache
-            = new HashMapCache<String, Integer>(true);
 
 	public LanguageResourceManager(Context context, String pkgName, Resources resources)
 	{

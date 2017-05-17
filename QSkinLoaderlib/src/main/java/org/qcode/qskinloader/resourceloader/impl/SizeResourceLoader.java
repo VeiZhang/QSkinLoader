@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
  *     author : VeiZhang
  *     blog   : http://tiimor.cn
  *     time   : 2017/5/17
- *     desc   :
+ *     desc   : 字体资源加载器
  * </pre>
  */
 
@@ -112,11 +112,11 @@ public class SizeResourceLoader implements IResourceLoader
                     if (loadCallBack != null) {
                         if (mSuffix == null)
                             loadCallBack.onLoadSuccess(mNewSkinIdentifier,
-                                    new APKResourceManager(
+                                    new SizeResourceManager(
                                             mContext, result.pkgName, result.resources));
                         else
                             loadCallBack.onLoadSuccess(mNewSkinIdentifier,
-                                    new APKResourceManager(mContext, mSuffix, result.pkgName, result.resources));
+                                    new SizeResourceManager(mContext, mSuffix, result.pkgName, result.resources));
                     }
                 } else {
                     if (loadCallBack != null) {

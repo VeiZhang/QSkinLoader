@@ -42,7 +42,7 @@ public class SkinTextSizeActivity extends BaseActivity implements View.OnClickLi
 			break;
 
 		case R.id.normal_text:
-			suffix = "_nromal";
+			suffix = "_normal";
 			break;
 
 		case R.id.big_text:
