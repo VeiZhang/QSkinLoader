@@ -68,6 +68,16 @@ public interface ISkinManager extends IObservable<IActivitySkinEventHandler> {
      */
     void loadLanguageSkin(String packageName, String local, @Nullable String suffix, ILoadSkinListener loadListener);
 
+    /**
+     * VeiZhang
+     * 字体大小切换
+     *
+     * @param packageName 安装包名
+     * @param suffix 后缀标识
+     * @param loadSkinListener
+     */
+    void loadSizeSkin(String packageName, String suffix, ILoadSkinListener loadSkinListener);
+
     /***
      * 加载指定的皮肤包，皮肤包以skinIdentifier标识，
      * 依靠resourceLoader加载，并通过loadListener告知皮肤切换结果。

@@ -8,18 +8,21 @@
     tools:context="com.excellence.skinloader.activity.SkinTextSizeActivity">
 
     <TextView
+        android:id="@+id/small_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="切换20sp"
         android:textSize="@dimen/textsize"/>
 
     <TextView
+        android:id="@+id/normal_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="切换30sp"
         android:textSize="@dimen/textsize"/>
 
     <TextView
+        android:id="@+id/big_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="切换50sp"

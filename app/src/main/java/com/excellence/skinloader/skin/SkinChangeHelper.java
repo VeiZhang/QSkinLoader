@@ -133,6 +133,13 @@ public class SkinChangeHelper
         SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new LoadSkinListener(listener));
     }
 
+    public void changeSizeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
+	{
+		mIsSwitching = true;
+		mIsDefaultMode = false;
+		SkinManager.getInstance().loadSizeSkin(packageName, suffix, new LoadSkinListener(listener));
+	}
+
 	private class LoadSkinListener implements ILoadSkinListener
 	{
 

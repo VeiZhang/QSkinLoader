@@ -23,6 +23,7 @@ import org.qcode.qskinloader.resourceloader.ILoadResourceCallback;
 import org.qcode.qskinloader.resourceloader.ResourceManager;
 import org.qcode.qskinloader.resourceloader.impl.APKResourceLoader;
 import org.qcode.qskinloader.resourceloader.impl.LanguageResourceLoader;
+import org.qcode.qskinloader.resourceloader.impl.SizeResourceLoader;
 
 import java.util.List;
 
@@ -297,6 +298,73 @@ public class SkinManagerImpl implements ISkinManager {
             }
         });
 	}
+
+	@Override
+	public void loadSizeSkin(String packageName, String suffix, ILoadSkinListener loadSkinListener)
+	{
+        loadSizeSkin(packageName, suffix, new SizeResourceLoader(mContext, suffix), loadSkinListener);
+	}
+
+    /**
+     *
+     * @param skinIdentifier 包名标识
+     * @param suffix 后缀标识
+     * @param resourceLoader
+     * @param loadListener
+     */
+    private void loadSizeSkin(final String skinIdentifier, final String suffix, IResourceLoader resourceLoader, final ILoadSkinListener loadListener)
+    {
+        // 加载已安装的资源包中带后缀，需要加上suffix
+        final String newSkinIdentifier = skinIdentifier + suffix;
+        if(StringUtils.isEmpty(newSkinIdentifier)
+                || null == resourceLoader) {
+            if(null != loadListener) {
+                loadListener.onLoadFail(newSkinIdentifier);
+            }
+            return;
+        }
+
+        //当前文本大小就是将要切换的大小，则不执行后续行为
+        if (newSkinIdentifier.equals(mLanguageResourceManager.getSkinIdentifier())) {
+            Logging.d(TAG, "load()| current language matches target, do nothing");
+            if(null != loadListener) {
+                // 需要保存包名标识、大小标识
+                loadListener.onLanguageLoadSuccess(newSkinIdentifier, suffix);
+            }
+            return;
+        }
+
+        resourceLoader.loadResource(skinIdentifier, new ILoadResourceCallback() {
+            @Override
+            public void onLoadStart(String identifier) {
+                if (loadListener != null) {
+                    loadListener.onLoadStart(newSkinIdentifier);
+                }
+            }
+
+            @Override
+            public void onLoadSuccess(String identifier, IResourceManager result) {
+                Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
+                mLanguageResourceManager.setBaseResource(identifier, result);
+
+                refreshAllLanguage();
+
+                Logging.d(TAG, "onSkinLoadSuccess()| notify update");
+                if (loadListener != null) {
+                    // 需要保存包名标识、大小后缀标识，后缀标识可为空
+                    loadListener.onLanguageLoadSuccess(newSkinIdentifier, suffix);
+                }
+            }
+
+            @Override
+            public void onLoadFail(String identifier, int errorCode) {
+                mLanguageResourceManager.setBaseResource(null, null);
+                if (loadListener != null) {
+                    loadListener.onLoadFail(newSkinIdentifier);
+                }
+            }
+        });
+    }
 
     @Override
     public void applySkin(View view, boolean applyChild) {
