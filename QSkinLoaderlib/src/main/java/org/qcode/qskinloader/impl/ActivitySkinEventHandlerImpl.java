@@ -256,7 +256,7 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
             public void run() {
                 View contentView = getContentView();
                 mSkinManager.applyLanguage(contentView, true);
-
+                mSkinManager.applyWindowViewLanguage();
                 //通知Activity做其他刷新操作
                 if (activity instanceof ISkinActivity) {
                     ((ISkinActivity) activity).handleLanguageChange();

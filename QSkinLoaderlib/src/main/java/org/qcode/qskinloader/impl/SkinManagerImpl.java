@@ -100,10 +100,16 @@ public class SkinManagerImpl implements ISkinManager {
         applyWindowViewSkin();
     }
 
+    /**
+     * VeiZhang 语言切换刷新
+     */
     private void refreshAllLanguage()
     {
-        /** VeiZhang 刷新语言 **/
+        /** 刷新语言 **/
         refreshLanguage();
+
+        /** VeiZhang **/
+        applyWindowViewLanguage();
     }
 
     @Override
@@ -381,7 +387,7 @@ public class SkinManagerImpl implements ISkinManager {
     }
 
     /**刷新Window上添加的View的显示模式*/
-    void applyWindowViewSkin() {
+    public void applyWindowViewSkin() {
         List<View> windowViewList = WindowViewManager.getInstance().getWindowViewList();
         if(CollectionUtils.isEmpty(windowViewList)) {
             return;
@@ -408,7 +414,9 @@ public class SkinManagerImpl implements ISkinManager {
         }, null);
     }
 
-    /** VeiZhang 通知语言切换 **/
+    /**
+     * VeiZhang 通知语言切换
+     */
     private void refreshLanguage()
     {
         notifyUpdate(new INotifyUpdate<IActivitySkinEventHandler>() {
@@ -421,5 +429,20 @@ public class SkinManagerImpl implements ISkinManager {
                 return false;
             }
         }, null);
+    }
+
+    /**
+     * VeiZhang 通知Window上添加的View语言切换
+     */
+    public void applyWindowViewLanguage()
+    {
+        List<View> windowViewList = WindowViewManager.getInstance().getWindowViewList();
+        if(CollectionUtils.isEmpty(windowViewList)) {
+            return;
+        }
+
+        for(View view : windowViewList) {
+            applyLanguage(view, true);
+        }
     }
 }
