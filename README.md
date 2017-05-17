@@ -134,7 +134,7 @@ public void changeLanguageConfigByPackageSuffix(String packageName, String suffi
 
 [Bintray]:https://bintray.com/veizhang/maven/skinloader "Bintray"
 [icon_Bintray]:https://img.shields.io/badge/Bintray-v1.1.0-brightgreen.svg
-[传送门]:https://github.com/VeiZhang/QSkinLoader/blob/README/README.md
+[传送门]:https://github.com/VeiZhang/QSkinLoader/tree/VeiZhang/README
 [QSkinLoader]:https://github.com/qqliu10u/QSkinLoader
 [fengtianyou]:https://github.com/fengtianyou
 
