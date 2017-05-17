@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.excellence.basetoolslibrary.baseadapter.CommonAdapter;
 import com.excellence.basetoolslibrary.baseadapter.ViewHolder;
 import com.excellence.skinloader.R;
-import com.excellence.skinloader.skin.BaseActivity;
 import com.excellence.skinloader.skin.SkinChangeHelper;
 
+import org.qcode.qskinloader.sample.BaseActivity;
 
 import java.util.Locale;
 
@@ -41,11 +41,11 @@ public class SkinLanguageActivity extends BaseActivity implements AdapterView.On
 		switch (position)
 		{
 		case 0:
-			config.setLocale(Locale.ENGLISH);
+			config.locale = Locale.ENGLISH;
 			break;
 
 		case 1:
-			config.setLocale(Locale.CHINESE);
+			config.locale = Locale.CHINESE;
 			break;
 		}
 		getResources().updateConfiguration(config, getResources().getDisplayMetrics());

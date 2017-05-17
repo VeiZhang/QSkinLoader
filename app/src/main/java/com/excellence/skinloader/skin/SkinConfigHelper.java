@@ -1,76 +1,138 @@
 package com.excellence.skinloader.skin;
 
+import android.content.Context;
 import android.text.TextUtils;
 
+import com.excellence.basetoolslibrary.utils.DBUtils;
+import com.excellence.skinloader.SkinLoaderApplication;
+
+/**
+ * <pre>
+ *     author : VeiZhang
+ *     blog   : http://tiimor.cn
+ *     time   : 2017/5/12
+ *     desc   :
+ * </pre>
+ */
+
 public class SkinConfigHelper {
-
-    /***
-     * 获取当前皮肤包的标识
-     */
-    public static String getSkinIdentifier() {
-        return Settings.getInstance().getString(
-                SkinConstant.CUSTOM_SKIN_IDENTIFIER,
-                SkinConstant.DEFAULT_SKIN);
-    }
-
-    /**
-     * 获取当前皮肤包后缀
-     * @return
-     */
-    public static String getSkinIdentifierSuffix() {
-        return Settings.getInstance().getString(SkinConstant.CUSTOM_SKIN_IDENTIFIER_SUFFIX, "");
-    }
-
-    /**
-     * 保存皮肤包的标识
-     */
-    public static void saveSkinIdentifier(String identifier) {
-        Settings.getInstance().setSetting(
-                SkinConstant.CUSTOM_SKIN_IDENTIFIER,
-                identifier);
-    }
-
-    /**
-     * 保存皮肤后缀标识
-     *
-     * @param identifierSuffix
-     */
-    public static void saveSkinIdentifierSuffix(String identifierSuffix)
-    {
-        if (TextUtils.isEmpty(identifierSuffix) || identifierSuffix.equalsIgnoreCase("null"))
-            identifierSuffix = "";
-		Settings.getInstance().setSetting(SkinConstant.CUSTOM_SKIN_IDENTIFIER_SUFFIX, identifierSuffix);
-	}
-
-    /**
-     * 是否默认皮肤
-     */
-    public static boolean isDefaultSkin() {
-        return SkinConstant.DEFAULT_SKIN.equals(getSkinIdentifier());
-    }
-
+	
+	private static final String		SKIN_CONFIG						= "skin_config";
+	public static final String		PACKAGE_NAME					= SkinLoaderApplication.getInstance().getPackageName();
+	
 	/**
-	 * 保存语言的标识
+	 * skin identifier
 	 */
-	public static void saveLanguageIdentifier(String identifier)
-	{
-		Settings.getInstance().setSetting(SkinConstant.CUSTOM_LANGUAGE_IDENTIFIER, identifier);
-	}
-
+	public static final String		CUSTOM_SKIN_IDENTIFIER			= PACKAGE_NAME + ".CUSTOM_SKIN_IDENTIFIER";
+	
 	/**
-	 * 保存语言标识
+	 * skin suffix identifier
+	 */
+	public static final String		CUSTOM_SKIN_IDENTIFIER_SUFFIX	= PACKAGE_NAME + ".CUSTOM_SKIN_IDENTIFIER_SUFFIX";
+	
+	/**
+	 * language identifier
+	 */
+	public static final String		CUSTOM_LANGUAGE_IDENTIFIER		= PACKAGE_NAME + ".CUSTOM_LANGUAGE_IDENTIFIER";
+	
+	/**
+	 * language local identifier
+	 */
+	public static final String		CUSTOM_LANGUAGE_LOCAL			= PACKAGE_NAME + ".CUSTOM_LANGUAGE_LOCAL";
+	
+	/**
+	 * default skin
+	 */
+	public static final String		DEFAULT_SKIN					= "default";
+	
+	private static SkinConfigHelper	mInstance						= null;
+	
+	private Context					mContext						= null;
+	
+	public static SkinConfigHelper getInstance() {
+		if (mInstance == null)
+			mInstance = new SkinConfigHelper();
+		return mInstance;
+	}
+	
+	private SkinConfigHelper() {
+		mContext = SkinLoaderApplication.getInstance();
+		DBUtils.init(SKIN_CONFIG);
+	}
+	
+	/**
+	 * get current skin identifier
+	 *
+	 * @return
+	 */
+	public String getSkinIdentifier() {
+		return DBUtils.getString(mContext, CUSTOM_SKIN_IDENTIFIER, DEFAULT_SKIN);
+	}
+	
+	/**
+	 * get current skin suffxi identifier
+	 *
+	 * @return
+	 */
+	public String getSkinIdentifierSuffix() {
+		return DBUtils.getString(mContext, CUSTOM_SKIN_IDENTIFIER_SUFFIX, "");
+	}
+	
+	/**
+	 * save skin identifier
+	 *
+	 * @param identifier
+	 */
+	public void saveSkinIdentifier(String identifier) {
+		DBUtils.setSetting(mContext, CUSTOM_SKIN_IDENTIFIER, identifier);
+	}
+	
+	/**
+	 * save skin suffix identifier
+	 *
+	 * @param identifierSuffix
+	 */
+	public void saveSkinIdentifierSuffix(String identifierSuffix) {
+		if (TextUtils.isEmpty(identifierSuffix) || identifierSuffix.equalsIgnoreCase("null"))
+			identifierSuffix = "";
+		DBUtils.setSetting(mContext, CUSTOM_SKIN_IDENTIFIER_SUFFIX, identifierSuffix);
+	}
+	
+	/**
+	 * is default skin
+	 *
+	 * @return {@code true}:yes<br>{@code false}:no
+	 */
+	public boolean isDefaultSkin() {
+		return DEFAULT_SKIN.equals(getSkinIdentifier());
+	}
+	
+	/**
+	 * save language identifier
+	 *
+	 * @param identifier
+	 */
+	public void saveLanguageIdentifier(String identifier) {
+		DBUtils.setSetting(mContext, CUSTOM_LANGUAGE_IDENTIFIER, identifier);
+	}
+	
+	/**
+	 * save language local identifier
 	 *
 	 * @param local
 	 */
-	public static void saveLanguageLocal(String local)
-	{
+	public void saveLanguageLocal(String local) {
 		if (TextUtils.isEmpty(local) || local.equalsIgnoreCase("null"))
 			local = "";
-		Settings.getInstance().setSetting(SkinConstant.CUSTOM_LANGUAGE_LOCAL, local);
+		DBUtils.setSetting(mContext, CUSTOM_LANGUAGE_LOCAL, local);
 	}
-
-	public static String getLanguageLocal()
-    {
-        return Settings.getInstance().getString(SkinConstant.CUSTOM_LANGUAGE_LOCAL, null);
-    }
+	
+	/**
+	 * get language local
+	 *
+	 * @return
+	 */
+	public String getLanguageLocal() {
+		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_LOCAL, null);
+	}
 }

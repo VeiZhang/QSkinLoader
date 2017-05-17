@@ -1,7 +1,6 @@
 package com.excellence.skinloader;
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,7 +14,7 @@ import com.excellence.skinloader.activity.SkinByInstalledAPKActivity;
 import com.excellence.skinloader.activity.SkinBySuffixActivity;
 import com.excellence.skinloader.activity.SkinLanguageActivity;
 import com.excellence.skinloader.fragment.MainFragment;
-import com.excellence.skinloader.skin.BaseActivity;
+import org.qcode.qskinloader.sample.BaseActivity;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener
 {

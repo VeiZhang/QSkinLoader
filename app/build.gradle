@@ -28,5 +28,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':QSkinLoaderlib')
     // compile 'com.excellence:skinloader:1.1.0'
-    compile 'com.excellence:basetools:1.2.1'
+    compile 'com.excellence:basetools:1.2.2'
 }

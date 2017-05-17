@@ -6,8 +6,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.excellence.skinloader.R;
-import com.excellence.skinloader.skin.BaseActivity;
 import com.excellence.skinloader.skin.SkinChangeHelper;
+
+import org.qcode.qskinloader.sample.BaseActivity;
 
 public class SkinByInstalledAPKActivity extends BaseActivity implements View.OnClickListener
 {

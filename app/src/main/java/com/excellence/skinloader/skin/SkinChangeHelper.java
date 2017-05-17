@@ -1,6 +1,8 @@
 package com.excellence.skinloader.skin;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.excellence.skinloader.SkinLoaderApplication;
 
@@ -12,8 +14,12 @@ import org.qcode.qskinloader.resourceloader.impl.SuffixResourceLoader;
 import java.io.File;
 
 /**
- * qqliu
- * 2016/9/26.
+ * <pre>
+ *     author : VeiZhang
+ *     blog   : https://veizhang.github.io/
+ *     time   : 2017/5/17
+ *     desc   : 切换接口示例
+ * </pre>
  */
 public class SkinChangeHelper {
 
@@ -21,10 +27,12 @@ public class SkinChangeHelper {
 
     private static volatile SkinChangeHelper mInstance;
     private final Context mContext;
+    private Handler mHandler = null;
 
     private SkinChangeHelper() {
-        mContext = SkinLoaderApplication.getAppContext();
-        mIsDefaultMode = SkinConfigHelper.isDefaultSkin();
+        mContext = SkinLoaderApplication.getInstance();
+        mHandler = new Handler(Looper.getMainLooper());
+        mIsDefaultMode = SkinConfigHelper.getInstance().isDefaultSkin();
     }
 
     public static SkinChangeHelper getInstance() {
@@ -42,8 +50,8 @@ public class SkinChangeHelper {
 
     private volatile boolean mIsSwitching = false;
 
-    public void init(Context context) {
-        SkinManager.getInstance().init(context);
+    public void init() {
+        SkinManager.getInstance().init(mContext);
     }
 
     public boolean isDefaultMode() {
@@ -71,7 +79,7 @@ public class SkinChangeHelper {
 	{
 		mIsSwitching = true;
 		mIsDefaultMode = true;
-		SkinManager.getInstance().restoreDefault(SkinConstant.DEFAULT_SKIN, new MyLoadSkinListener(listener));
+		SkinManager.getInstance().restoreDefault(SkinConfigHelper.DEFAULT_SKIN, new LoadSkinListener(listener));
 	}
 
     /**
@@ -86,16 +94,11 @@ public class SkinChangeHelper {
         File skin = new File(
                 SkinUtils.getTotalSkinPath(mContext));
 
-        if (skin == null || !skin.exists()) {
-            UIUtil.showToast(mContext, "皮肤初始化失败，请检查皮肤文件是否存在");
-            return;
-        }
-
         mIsSwitching = true;
         mIsDefaultMode = false;
 
         SkinManager.getInstance().loadAPKSkin(
-                skin.getAbsolutePath(), new MyLoadSkinListener(listener));
+                skin.getAbsolutePath(), new LoadSkinListener(listener));
     }
 
     public void changeLanguageConfigByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
@@ -103,14 +106,14 @@ public class SkinChangeHelper {
         mIsSwitching = true;
         mIsDefaultMode = false;
         String local = mContext.getResources().getConfiguration().locale.toString();
-        SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new MyLoadSkinListener(listener));
+        SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new LoadSkinListener(listener));
     }
 
     public void changeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
     {
         mIsSwitching = true;
         mIsDefaultMode = false;
-        SkinManager.getInstance().loadAPKSkin(packageName, suffix, new MyLoadSkinListener(listener));
+        SkinManager.getInstance().loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
     }
 
     public void changeSkinBySuffix(String skinIdentifier, OnSkinChangeListener listener) {
@@ -118,7 +121,7 @@ public class SkinChangeHelper {
         mIsDefaultMode = false;
         SkinManager.getInstance().loadSkin(skinIdentifier,
         new SuffixResourceLoader(mContext),
-        new MyLoadSkinListener(listener));
+        new LoadSkinListener(listener));
     }
 
     public void changeSkinByConfig(String mode, OnSkinChangeListener listener) {
@@ -126,14 +129,14 @@ public class SkinChangeHelper {
         mIsDefaultMode = false;
         SkinManager.getInstance().loadSkin(mode,
                 new ConfigChangeResourceLoader(mContext),
-                new MyLoadSkinListener(listener));
+                new LoadSkinListener(listener));
     }
 
-    private class MyLoadSkinListener implements ILoadSkinListener {
+    private class LoadSkinListener implements ILoadSkinListener {
 
         private final OnSkinChangeListener mListener;
 
-        public MyLoadSkinListener(OnSkinChangeListener listener) {
+        public LoadSkinListener(OnSkinChangeListener listener) {
             mListener = listener;
         }
 
@@ -146,10 +149,10 @@ public class SkinChangeHelper {
             mIsSwitching = false;
 
             //存储皮肤标识
-            SkinConfigHelper.saveSkinIdentifier(skinIdentifier);
-            SkinConfigHelper.saveSkinIdentifierSuffix(suffix);
+            SkinConfigHelper.getInstance().saveSkinIdentifier(skinIdentifier);
+            SkinConfigHelper.getInstance().saveSkinIdentifierSuffix(suffix);
 
-            UITaskRunner.getHandler().post(new Runnable() {
+            mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     if(null != mListener) {
@@ -165,10 +168,10 @@ public class SkinChangeHelper {
             mIsSwitching = false;
 
             // 存储语言标识
-            SkinConfigHelper.saveLanguageIdentifier(languageIdentifier);
-            SkinConfigHelper.saveLanguageLocal(local);
+            SkinConfigHelper.getInstance().saveLanguageIdentifier(languageIdentifier);
+            SkinConfigHelper.getInstance().saveLanguageLocal(local);
 
-            UITaskRunner.getHandler().post(new Runnable() {
+            mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     if(null != mListener) {
@@ -182,7 +185,7 @@ public class SkinChangeHelper {
         public void onLoadFail(String skinIdentifier) {
             mIsSwitching = false;
 
-            UITaskRunner.getHandler().post(new Runnable() {
+            mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     if (null != mListener) {
