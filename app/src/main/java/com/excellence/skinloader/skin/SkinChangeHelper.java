@@ -51,16 +51,29 @@ public class SkinChangeHelper
 		return mInstance;
 	}
 
+	/**
+	 * 初始化换肤框架
+	 */
 	public void init()
 	{
 		SkinManager.getInstance().init(mContext);
 	}
 
+	/**
+	 * 是否是默认皮肤
+	 *
+	 * @return {@code true}:是<br>{@code false}:否
+	 */
 	public boolean isDefaultMode()
 	{
 		return mIsDefaultMode;
 	}
 
+	/**
+	 * 是否正在切换
+	 *
+	 * @return {@code true}:是<br>{@code false}:否
+	 */
 	public boolean isSwitching()
 	{
 		return mIsSwitching;
@@ -69,7 +82,7 @@ public class SkinChangeHelper
 	/**
 	 * 通过APK、包名、后缀换肤的方式，恢复默认皮肤
 	 *
-	 * @param listener
+	 * @param listener 监听恢复成功或失败
 	 */
 	public void restoreDefaultSkinByAPKOrPackageOrSuffix(OnSkinChangeListener listener)
 	{
@@ -78,13 +91,12 @@ public class SkinChangeHelper
 		SkinManager.getInstance().restoreDefault(SkinConfigHelper.DEFAULT_SKIN, new LoadSkinListener(listener));
 	}
 
-	public void changeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
-	{
-		mIsSwitching = true;
-		mIsDefaultMode = false;
-		SkinManager.getInstance().loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
-	}
-
+	/**
+	 * 通过后缀查找本应用中的资源，换肤
+	 *
+	 * @param skinIdentifier 后缀标识
+	 * @param listener 监听换肤成功或失败
+	 */
 	public void changeSkinBySuffix(String skinIdentifier, OnSkinChangeListener listener)
 	{
 		mIsSwitching = true;
@@ -92,6 +104,27 @@ public class SkinChangeHelper
 		SkinManager.getInstance().loadSkin(skinIdentifier, new SuffixResourceLoader(mContext), new LoadSkinListener(listener));
 	}
 
+	/**
+	 * 通过包名、后缀查找指定的已安装应用中的资源，换肤
+	 *
+	 * @param packageName 包名
+	 * @param suffix 后缀标识
+	 * @param listener 监听换肤成功或失败
+	 */
+	public void changeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
+	{
+		mIsSwitching = true;
+		mIsDefaultMode = false;
+		SkinManager.getInstance().loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
+	}
+
+	/**
+	 * 通过指定包名、后缀查找已安装应用中的资源，切换语言
+	 *
+	 * @param packageName 包名
+	 * @param suffix 后缀标识
+	 * @param listener 监听换肤成功或失败
+	 */
     public void changeLanguageConfigByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
     {
         mIsSwitching = true;
