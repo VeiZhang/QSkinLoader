@@ -54,7 +54,7 @@ public class LanguageResourceLoader implements IResourceLoader
             return;
         }
         mNewSkinIdentifier = skinIdentifier + mSuffix + "_" + mLanguageLocal;
-        new AsyncTask<String, Void, APkLoadResult>() {
+        new AsyncTask<String, Void, LanguageLoadResult>() {
 
             @Override
             protected void onPreExecute() {
@@ -64,7 +64,7 @@ public class LanguageResourceLoader implements IResourceLoader
             }
 
             @Override
-            protected APkLoadResult doInBackground(String... params) {
+            protected LanguageLoadResult doInBackground(String... params) {
                 if (null == mContext || null == params || params.length <= 0) {
                     return null;
                 }
@@ -76,7 +76,7 @@ public class LanguageResourceLoader implements IResourceLoader
 
                         Context skinContext = mContext.createPackageContext(params[0], Context.CONTEXT_IGNORE_SECURITY);
                         Resources superResources = skinContext.getResources();
-                        return new APkLoadResult(params[0], superResources);
+                        return new LanguageLoadResult(params[0], superResources);
                     }
                     else
                     {
@@ -100,7 +100,7 @@ public class LanguageResourceLoader implements IResourceLoader
                         Resources skinResource = new Resources(
                                 assetManager, superResources.getDisplayMetrics(),
                                 superResources.getConfiguration());
-                        return new APkLoadResult(skinPkgName, skinResource);
+                        return new LanguageLoadResult(skinPkgName, skinResource);
                     }
                 } catch (Exception ex) {
                     Logging.d(TAG, "doInBackground()| exception happened", ex);
@@ -110,7 +110,7 @@ public class LanguageResourceLoader implements IResourceLoader
             }
 
             @Override
-            protected void onPostExecute(APkLoadResult result) {
+            protected void onPostExecute(LanguageLoadResult result) {
                 if (null != result) {
                     if (loadCallBack != null) {
                         if (mSuffix == null)
@@ -131,11 +131,11 @@ public class LanguageResourceLoader implements IResourceLoader
         }.execute(skinIdentifier);
     }
 
-    private static class APkLoadResult {
+    private static class LanguageLoadResult {
         String pkgName;
         Resources resources;
 
-        public APkLoadResult(String pkgName, Resources resources) {
+        public LanguageLoadResult(String pkgName, Resources resources) {
             this.pkgName = pkgName;
             this.resources = resources;
         }

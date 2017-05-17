@@ -51,7 +51,7 @@ public class SizeResourceLoader implements IResourceLoader
             return;
         }
         mNewSkinIdentifier = skinIdentifier + mSuffix;
-        new AsyncTask<String, Void, APkLoadResult>() {
+        new AsyncTask<String, Void, SizeLoadResult>() {
 
             @Override
             protected void onPreExecute() {
@@ -61,7 +61,7 @@ public class SizeResourceLoader implements IResourceLoader
             }
 
             @Override
-            protected APkLoadResult doInBackground(String... params) {
+            protected SizeLoadResult doInBackground(String... params) {
                 if (null == mContext || null == params || params.length <= 0) {
                     return null;
                 }
@@ -73,7 +73,7 @@ public class SizeResourceLoader implements IResourceLoader
 
                         Context skinContext = mContext.createPackageContext(params[0], Context.CONTEXT_IGNORE_SECURITY);
                         Resources superResources = skinContext.getResources();
-                        return new APkLoadResult(params[0], superResources);
+                        return new SizeLoadResult(params[0], superResources);
                     }
                     else
                     {
@@ -97,7 +97,7 @@ public class SizeResourceLoader implements IResourceLoader
                         Resources skinResource = new Resources(
                                 assetManager, superResources.getDisplayMetrics(),
                                 superResources.getConfiguration());
-                        return new APkLoadResult(skinPkgName, skinResource);
+                        return new SizeLoadResult(skinPkgName, skinResource);
                     }
                 } catch (Exception ex) {
                     Logging.d(TAG, "doInBackground()| exception happened", ex);
@@ -107,7 +107,7 @@ public class SizeResourceLoader implements IResourceLoader
             }
 
             @Override
-            protected void onPostExecute(APkLoadResult result) {
+            protected void onPostExecute(SizeLoadResult result) {
                 if (null != result) {
                     if (loadCallBack != null) {
                         if (mSuffix == null)
@@ -128,11 +128,11 @@ public class SizeResourceLoader implements IResourceLoader
         }.execute(skinIdentifier);
 	}
 
-    private static class APkLoadResult {
+    private static class SizeLoadResult {
         String pkgName;
         Resources resources;
 
-        public APkLoadResult(String pkgName, Resources resources) {
+        public SizeLoadResult(String pkgName, Resources resources) {
             this.pkgName = pkgName;
             this.resources = resources;
         }
