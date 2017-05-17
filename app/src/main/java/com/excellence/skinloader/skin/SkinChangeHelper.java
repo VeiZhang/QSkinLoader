@@ -8,10 +8,7 @@ import com.excellence.skinloader.SkinLoaderApplication;
 
 import org.qcode.qskinloader.ILoadSkinListener;
 import org.qcode.qskinloader.SkinManager;
-import org.qcode.qskinloader.resourceloader.impl.ConfigChangeResourceLoader;
 import org.qcode.qskinloader.resourceloader.impl.SuffixResourceLoader;
-
-import java.io.File;
 
 /**
  * <pre>
@@ -21,60 +18,59 @@ import java.io.File;
  *     desc   : 切换接口示例
  * </pre>
  */
-public class SkinChangeHelper {
+public class SkinChangeHelper
+{
 
-    public static final String TAG = SkinChangeHelper.class.getSimpleName();
+	public static final String TAG = SkinChangeHelper.class.getSimpleName();
 
-    private static volatile SkinChangeHelper mInstance;
-    private final Context mContext;
-    private Handler mHandler = null;
+	private static volatile SkinChangeHelper mInstance;
+	private final Context mContext;
+	private Handler mHandler = null;
+	private volatile boolean mIsDefaultMode = false;
+	private volatile boolean mIsSwitching = false;
 
-    private SkinChangeHelper() {
-        mContext = SkinLoaderApplication.getInstance();
-        mHandler = new Handler(Looper.getMainLooper());
-        mIsDefaultMode = SkinConfigHelper.getInstance().isDefaultSkin();
-    }
+	private SkinChangeHelper()
+	{
+		mContext = SkinLoaderApplication.getInstance();
+		mHandler = new Handler(Looper.getMainLooper());
+		mIsDefaultMode = SkinConfigHelper.getInstance().isDefaultSkin();
+	}
 
-    public static SkinChangeHelper getInstance() {
-        if (null == mInstance) {
-            synchronized (SkinChangeHelper.class) {
-                if (null == mInstance) {
-                    mInstance = new SkinChangeHelper();
-                }
-            }
-        }
-        return mInstance;
-    }
+	public static SkinChangeHelper getInstance()
+	{
+		if (null == mInstance)
+		{
+			synchronized (SkinChangeHelper.class)
+			{
+				if (null == mInstance)
+				{
+					mInstance = new SkinChangeHelper();
+				}
+			}
+		}
+		return mInstance;
+	}
 
-    private volatile boolean mIsDefaultMode = false;
+	public void init()
+	{
+		SkinManager.getInstance().init(mContext);
+	}
 
-    private volatile boolean mIsSwitching = false;
+	public boolean isDefaultMode()
+	{
+		return mIsDefaultMode;
+	}
 
-    public void init() {
-        SkinManager.getInstance().init(mContext);
-    }
+	public boolean isSwitching()
+	{
+		return mIsSwitching;
+	}
 
-    public boolean isDefaultMode() {
-        return mIsDefaultMode;
-    }
-
-    public boolean isSwitching() {
-        return mIsSwitching;
-    }
-
-    public void restoreDefaultSkinByConfig(OnSkinChangeListener listener)
-    {
-        mIsSwitching = true;
-        mIsDefaultMode = true;
-        //基于UIMode换肤只能通过改回配置才能换肤
-        changeSkinByConfig(ConfigChangeResourceLoader.MODE_DAY, listener);
-    }
-
-    /**
-     * 通过APK、包名、后缀换肤的方式，恢复默认皮肤
-     *
-     * @param listener
-     */
+	/**
+	 * 通过APK、包名、后缀换肤的方式，恢复默认皮肤
+	 *
+	 * @param listener
+	 */
 	public void restoreDefaultSkinByAPKOrPackageOrSuffix(OnSkinChangeListener listener)
 	{
 		mIsSwitching = true;
@@ -82,24 +78,19 @@ public class SkinChangeHelper {
 		SkinManager.getInstance().restoreDefault(SkinConfigHelper.DEFAULT_SKIN, new LoadSkinListener(listener));
 	}
 
-    /**
-     * 需要修改未安装的APK的路径和文件名，有局限性，容易忽视资源文件路径，需要手动push，比较麻烦
-     * /data/data/com.excellence.skinloader.cache/Resource.skin
-     *
-     * @param listener
-     */
-    public void changeSkinByApk(OnSkinChangeListener listener) {
-        SkinUtils.copyAssetSkin(mContext);
+	public void changeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
+	{
+		mIsSwitching = true;
+		mIsDefaultMode = false;
+		SkinManager.getInstance().loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
+	}
 
-        File skin = new File(
-                SkinUtils.getTotalSkinPath(mContext));
-
-        mIsSwitching = true;
-        mIsDefaultMode = false;
-
-        SkinManager.getInstance().loadAPKSkin(
-                skin.getAbsolutePath(), new LoadSkinListener(listener));
-    }
+	public void changeSkinBySuffix(String skinIdentifier, OnSkinChangeListener listener)
+	{
+		mIsSwitching = true;
+		mIsDefaultMode = false;
+		SkinManager.getInstance().loadSkin(skinIdentifier, new SuffixResourceLoader(mContext), new LoadSkinListener(listener));
+	}
 
     public void changeLanguageConfigByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
     {
@@ -109,96 +100,88 @@ public class SkinChangeHelper {
         SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new LoadSkinListener(listener));
     }
 
-    public void changeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
-    {
-        mIsSwitching = true;
-        mIsDefaultMode = false;
-        SkinManager.getInstance().loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
-    }
+	private class LoadSkinListener implements ILoadSkinListener
+	{
 
-    public void changeSkinBySuffix(String skinIdentifier, OnSkinChangeListener listener) {
-        mIsSwitching = true;
-        mIsDefaultMode = false;
-        SkinManager.getInstance().loadSkin(skinIdentifier,
-        new SuffixResourceLoader(mContext),
-        new LoadSkinListener(listener));
-    }
+		private final OnSkinChangeListener mListener;
 
-    public void changeSkinByConfig(String mode, OnSkinChangeListener listener) {
-        mIsSwitching = true;
-        mIsDefaultMode = false;
-        SkinManager.getInstance().loadSkin(mode,
-                new ConfigChangeResourceLoader(mContext),
-                new LoadSkinListener(listener));
-    }
+		public LoadSkinListener(OnSkinChangeListener listener)
+		{
+			mListener = listener;
+		}
 
-    private class LoadSkinListener implements ILoadSkinListener {
+		@Override
+		public void onLoadStart(String skinIdentifier)
+		{
+		}
 
-        private final OnSkinChangeListener mListener;
+		@Override
+		public void onSkinLoadSuccess(String skinIdentifier, String suffix)
+		{
+			mIsSwitching = false;
 
-        public LoadSkinListener(OnSkinChangeListener listener) {
-            mListener = listener;
-        }
+			// 存储皮肤标识
+			SkinConfigHelper.getInstance().saveSkinIdentifier(skinIdentifier);
+			SkinConfigHelper.getInstance().saveSkinIdentifierSuffix(suffix);
 
-        @Override
-        public void onLoadStart(String skinIdentifier) {
-        }
-
-        @Override
-        public void onSkinLoadSuccess(String skinIdentifier, String suffix) {
-            mIsSwitching = false;
-
-            //存储皮肤标识
-            SkinConfigHelper.getInstance().saveSkinIdentifier(skinIdentifier);
-            SkinConfigHelper.getInstance().saveSkinIdentifierSuffix(suffix);
-
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if(null != mListener) {
-                        mListener.onSuccess();
-                    }
-                }
-            });
-        }
+			mHandler.post(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if (null != mListener)
+					{
+						mListener.onSuccess();
+					}
+				}
+			});
+		}
 
 		@Override
 		public void onLanguageLoadSuccess(String languageIdentifier, String local)
 		{
-            mIsSwitching = false;
+			mIsSwitching = false;
 
-            // 存储语言标识
-            SkinConfigHelper.getInstance().saveLanguageIdentifier(languageIdentifier);
-            SkinConfigHelper.getInstance().saveLanguageLocal(local);
+			// 存储语言标识
+			SkinConfigHelper.getInstance().saveLanguageIdentifier(languageIdentifier);
+			SkinConfigHelper.getInstance().saveLanguageLocal(local);
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if(null != mListener) {
-                        mListener.onSuccess();
-                    }
-                }
-            });
+			mHandler.post(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if (null != mListener)
+					{
+						mListener.onSuccess();
+					}
+				}
+			});
 		}
 
-        @Override
-        public void onLoadFail(String skinIdentifier) {
-            mIsSwitching = false;
+		@Override
+		public void onLoadFail(String skinIdentifier)
+		{
+			mIsSwitching = false;
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (null != mListener) {
-                        mListener.onError();
-                    }
-                }
-            });
-        }
-    };
+			mHandler.post(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if (null != mListener)
+					{
+						mListener.onError();
+					}
+				}
+			});
+		}
+	}
 
-    public interface OnSkinChangeListener {
-        void onSuccess();
+	public interface OnSkinChangeListener
+	{
+		void onSuccess();
 
-        void onError();
-    }
+		void onError();
+	}
 }

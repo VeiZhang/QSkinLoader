@@ -6,7 +6,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.excellence.skinloader.R;
-import com.excellence.skinloader.skin.SkinChangeHelper;
 
 import org.qcode.qskinloader.sample.BaseActivity;
 
@@ -27,40 +26,6 @@ public class SkinByAPKFileActivity extends BaseActivity implements View.OnClickL
 	@Override
 	public void onClick(View v)
 	{
-		boolean isDefaultSkin = SkinChangeHelper.getInstance().isDefaultMode();
-		if (isDefaultSkin)
-		{
-			SkinChangeHelper.getInstance().changeSkinByApk(new SkinChangeHelper.OnSkinChangeListener()
-			{
-				@Override
-				public void onSuccess()
-				{
-					Toast.makeText(SkinByAPKFileActivity.this, "换肤成功", Toast.LENGTH_SHORT).show();
-				}
-
-				@Override
-				public void onError()
-				{
-					Toast.makeText(SkinByAPKFileActivity.this, "未找到资源APK", Toast.LENGTH_SHORT).show();
-				}
-			});
-		}
-		else
-		{
-			SkinChangeHelper.getInstance().restoreDefaultSkinByAPKOrPackageOrSuffix(new SkinChangeHelper.OnSkinChangeListener()
-			{
-				@Override
-				public void onSuccess()
-				{
-					Toast.makeText(SkinByAPKFileActivity.this, "恢复默认皮肤成功", Toast.LENGTH_SHORT).show();
-				}
-
-				@Override
-				public void onError()
-				{
-					Toast.makeText(SkinByAPKFileActivity.this, "恢复默认皮肤失败", Toast.LENGTH_SHORT).show();
-				}
-			});
-		}
+		Toast.makeText(this, "尚未示例，敬请期待！", Toast.LENGTH_SHORT).show();
 	}
 }
