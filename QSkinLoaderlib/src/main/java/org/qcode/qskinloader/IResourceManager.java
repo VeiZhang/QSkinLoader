@@ -99,6 +99,7 @@ public interface IResourceManager {
     ColorStateList getColorStateList(int resId, String typeName, String resName) throws Resources.NotFoundException;
 
 	/**
+     * VeiZhang
 	 * get string by resource id and name
 	 *
 	 * @param resId
@@ -107,4 +108,16 @@ public interface IResourceManager {
 	 * @throws Resources.NotFoundException
 	 */
 	String getString(int resId, String typeName, String resName) throws Resources.NotFoundException;
+
+    /**
+     * VeiZhang
+     * get int by resource id and name
+     *
+     * @param resId
+     * @param typeName
+     * @param resName
+     * @return
+     * @throws Resources.NotFoundException
+     */
+    int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException;
 }

@@ -75,9 +75,16 @@ public class ConfigChangeResourceManager implements IResourceManager {
         return mResources.getColorStateList(resId);
     }
 
+    /** VeiZhang Text **/
 	@Override
 	public String getString(int resId, String typeName, String resName)
 	{
 		return mResources.getString(resId);
 	}
+
+    /** VeiZhang TextSize **/
+    @Override
+    public int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException {
+        return mResources.getInteger(resId);
+    }
 }

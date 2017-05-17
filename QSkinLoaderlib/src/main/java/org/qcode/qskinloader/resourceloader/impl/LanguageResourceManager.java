@@ -98,6 +98,7 @@ public class LanguageResourceManager implements IResourceManager {
         return null;
     }
 
+    /** VeiZhang Text **/
     @Override
     public String getString(int resId, String typeName, String resName)
     {
@@ -105,6 +106,12 @@ public class LanguageResourceManager implements IResourceManager {
         int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
         String text = mResources.getString(trueResId);
         return text;
+    }
+
+    /** VeiZhang TextSize **/
+    @Override
+    public int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException {
+        return 0;
     }
 
     private String getResKey(String skinPackageName, String resName) {

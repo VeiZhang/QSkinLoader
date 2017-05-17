@@ -13,12 +13,13 @@ import com.excellence.skinloader.activity.SkinByAPKFileActivity;
 import com.excellence.skinloader.activity.SkinByInstalledAPKActivity;
 import com.excellence.skinloader.activity.SkinBySuffixActivity;
 import com.excellence.skinloader.activity.SkinLanguageActivity;
+import com.excellence.skinloader.activity.SkinTextSizeActivity;
 import com.excellence.skinloader.fragment.MainFragment;
 import org.qcode.qskinloader.sample.BaseActivity;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener
 {
-	private String[] mNames = new String[] { "当前APK内后缀换肤", "未安装的资源APK换肤", "已安装的APK换肤", "语言切换" };
+	private String[] mNames = new String[] { "当前APK内后缀换肤", "未安装的资源APK换肤", "已安装的APK换肤", "语言切换", "字体大小切换" };
 	private GridView mGridView = null;
 
 	@Override
@@ -60,6 +61,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
 		case 3:
 			ActivityUtils.startAnotherActivity(MainActivity.this, SkinLanguageActivity.class);
+			break;
+
+		case 4:
+			ActivityUtils.startAnotherActivity(MainActivity.this, SkinTextSizeActivity.class);
 			break;
 		}
 	}

@@ -134,6 +134,7 @@ public class SuffixResourceManager implements IResourceManager {
         return colorList;
     }
 
+    /** VeiZhang Text **/
 	@Override
 	public String getString(int resId, String typeName, String resName)
 	{
@@ -142,6 +143,15 @@ public class SuffixResourceManager implements IResourceManager {
         String text = mResources.getString(trueResId);
         return text;
 	}
+
+    /** VeiZhang TextSize **/
+    @Override
+    public int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException {
+        String trueResName = appendSuffix(resName);
+        int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
+        int size = mResources.getDimensionPixelOffset(trueResId);
+        return size;
+    }
 
     private String appendSuffix(String resName) {
         return resName + mSkinSuffix;

@@ -30,6 +30,7 @@ public class SkinAttrFactory {
         registerSkinAttrHandler(SkinAttrName.DRAW_SHADOW, new ShadowAttrHandler());
         registerSkinAttrHandler(SkinAttrName.CLEAR_RECYCLER_VIEW, new RecyclerViewClearSubAttrHandler());
         registerSkinAttrHandler(SkinAttrName.TEXT, new TextAttrHandler());
+        registerSkinAttrHandler(SkinAttrName.TEXT_SIZE, new TextSizeAttrHandler());
     }
 
     /***

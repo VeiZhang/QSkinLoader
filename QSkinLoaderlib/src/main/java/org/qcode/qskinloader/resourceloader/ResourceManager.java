@@ -134,6 +134,7 @@ public class ResourceManager implements IResourceManager {
         return mDefaultResources.getDrawable(resId);
     }
 
+    /** VeiZhang Text **/
 	@Override
 	public String getString(int resId, String typeName, String resName) throws Resources.NotFoundException
 	{
@@ -150,6 +151,23 @@ public class ResourceManager implements IResourceManager {
 		}
 		return mDefaultResources.getString(resId);
 	}
+
+    /** VeiZhang TextSize **/
+    @Override
+    public int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException {
+        if (null != mBase)
+        {
+            try
+            {
+                return mBase.getInt(resId, typeName, resName);
+            }
+            catch (Exception ex)
+            {
+                Logging.d(TAG, "getColorStateList()| error happened", ex);
+            }
+        }
+        return mDefaultResources.getInteger(resId);
+    }
 
     /**
      * 加载指定资源颜色drawable,转化为ColorStateList，保证selector类型的Color也能被转换。

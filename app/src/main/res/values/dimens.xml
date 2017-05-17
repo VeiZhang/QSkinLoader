@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin">20dp</dimen>
+
+    <dimen name="textsize">20sp</dimen>
+    <dimen name="textsize_nromal">30sp</dimen>
+    <dimen name="textsize_big">50sp</dimen>
+
 </resources>

@@ -133,6 +133,7 @@ public class APKResourceManager implements IResourceManager {
         return colorList;
     }
 
+    /** VeiZhang Text **/
 	@Override
 	public String getString(int resId, String typeName, String resName)
 	{
@@ -141,6 +142,15 @@ public class APKResourceManager implements IResourceManager {
 		String text = mResources.getString(trueResId);
 		return text;
 	}
+
+    /** VeiZhang TextSize **/
+    @Override
+    public int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException {
+        String trueResName = appendSuffix(resName);
+        int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
+        int size = mResources.getDimensionPixelOffset(trueResId);
+        return size;
+    }
 
     private String getResKey(String skinPackageName, String resName) {
         return (null == skinPackageName ? "" : skinPackageName) + "_" + resName;

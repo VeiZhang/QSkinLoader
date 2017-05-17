@@ -26,4 +26,7 @@ public class SkinConstant {
     /**属性值对应的类型是string**/
     public static final String RES_TYPE_NAME_TEXT = "string";
 
+    /**属性值对应的类型是dimen**/
+    public static final String RES_TYPE_NAME_DIMEN = "dimen";
+
 }
