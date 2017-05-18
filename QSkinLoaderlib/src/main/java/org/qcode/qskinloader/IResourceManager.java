@@ -119,5 +119,5 @@ public interface IResourceManager {
      * @return
      * @throws Resources.NotFoundException
      */
-    int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException;
+    int getDimen(int resId, String typeName, String resName) throws Resources.NotFoundException;
 }

@@ -30,6 +30,7 @@ public interface ILoadSkinListener {
     void onSkinLoadSuccess(String skinIdentifier, String suffix);
 
     /**
+     * VeiZhang
      * 语言切换完成
      * 需要保存语言标识
      *
@@ -37,6 +38,16 @@ public interface ILoadSkinListener {
      * @param local
      */
     void onLanguageLoadSuccess(String languageIdentifier, String local);
+
+    /**
+     * VeiZhang
+     * 字体大小切换完成
+     * 保存标识
+     *
+     * @param sizeIdentifier
+     * @param suffix
+     */
+    void onSizeLoadSuccess(String sizeIdentifier, String suffix);
 
     /***
      * 加载皮肤失败

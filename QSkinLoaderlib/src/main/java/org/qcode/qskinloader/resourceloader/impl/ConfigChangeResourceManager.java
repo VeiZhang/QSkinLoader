@@ -84,7 +84,7 @@ public class ConfigChangeResourceManager implements IResourceManager {
 
     /** VeiZhang TextSize **/
     @Override
-    public int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException {
-        return mResources.getInteger(resId);
+    public int getDimen(int resId, String typeName, String resName) throws Resources.NotFoundException {
+        return mResources.getDimensionPixelOffset(resId);
     }
 }

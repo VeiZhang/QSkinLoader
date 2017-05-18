@@ -365,7 +365,7 @@ public class SkinManagerImpl implements ISkinManager {
                 Logging.d(TAG, "onSkinLoadSuccess() | identifier= " + identifier);
                 mSizeResourceManager.setBaseResource(identifier, result);
 
-                refreshAllLanguage();
+                refreshAllSize();
 
                 Logging.d(TAG, "onSkinLoadSuccess()| notify update");
                 if (loadListener != null) {

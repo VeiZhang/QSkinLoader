@@ -81,21 +81,19 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
 
         Logging.d(TAG, "onViewCreated()");
 
+        View contentView = getContentView();
         if (!mSkinManager.getSkinResourceManager().isDefault()) {
-            View contentView = getContentView();
             mSkinManager.applySkin(contentView, true);
             refreshWindowBg(contentView);
         }
 
         if (!mSkinManager.getLanguageResourceManager().isDefault())
         {
-            View contentView = getContentView();
             mSkinManager.applyLanguage(contentView, true);
         }
 
         if (!mSkinManager.getSizeResourceManager().isDefault())
         {
-            View contentView = getContentView();
             mSkinManager.applySize(contentView, true);
         }
 

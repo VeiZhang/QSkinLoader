@@ -146,7 +146,7 @@ public class SuffixResourceManager implements IResourceManager {
 
     /** VeiZhang TextSize **/
     @Override
-    public int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException {
+    public int getDimen(int resId, String typeName, String resName) throws Resources.NotFoundException {
         String trueResName = appendSuffix(resName);
         int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
         int size = mResources.getDimensionPixelOffset(trueResId);

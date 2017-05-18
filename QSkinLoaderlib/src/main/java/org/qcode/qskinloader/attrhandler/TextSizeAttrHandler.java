@@ -35,7 +35,7 @@ class TextSizeAttrHandler implements ISkinAttrHandler
         TextView textView = (TextView) view;
         if (SkinConstant.RES_TYPE_NAME_DIMEN.equals(skinAttr.mAttrValueTypeName))
         {
-            int textSize = resourceManager.getInt(skinAttr.mAttrValueRefId, skinAttr.mAttrValueTypeName, skinAttr.mAttrValueRefName);
+            int textSize = resourceManager.getDimen(skinAttr.mAttrValueRefId, skinAttr.mAttrValueTypeName, skinAttr.mAttrValueRefName);
             textView.setTextSize(textSize);
         }
 	}

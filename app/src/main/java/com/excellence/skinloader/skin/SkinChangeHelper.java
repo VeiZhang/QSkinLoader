@@ -200,6 +200,27 @@ public class SkinChangeHelper
 		}
 
 		@Override
+		public void onSizeLoadSuccess(String sizeIdentifier, String suffix) {
+			mIsSwitching = false;
+
+			// 存储字体大小标识
+			SkinConfigHelper.getInstance().saveSizeIdentifier(sizeIdentifier);
+			SkinConfigHelper.getInstance().saveSizeIdentifierSuffix(suffix);
+
+			mHandler.post(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if (null != mListener)
+					{
+						mListener.onSuccess();
+					}
+				}
+			});
+		}
+
+		@Override
 		public void onLoadFail(String skinIdentifier)
 		{
 			mIsSwitching = false;

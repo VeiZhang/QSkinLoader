@@ -154,19 +154,19 @@ public class ResourceManager implements IResourceManager {
 
     /** VeiZhang TextSize **/
     @Override
-    public int getInt(int resId, String typeName, String resName) throws Resources.NotFoundException {
+    public int getDimen(int resId, String typeName, String resName) throws Resources.NotFoundException {
         if (null != mBase)
         {
             try
             {
-                return mBase.getInt(resId, typeName, resName);
+                return mBase.getDimen(resId, typeName, resName);
             }
             catch (Exception ex)
             {
                 Logging.d(TAG, "getColorStateList()| error happened", ex);
             }
         }
-        return mDefaultResources.getInteger(resId);
+        return mDefaultResources.getDimensionPixelOffset(resId);
     }
 
     /**
