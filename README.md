@@ -10,6 +10,7 @@
 
 ## 目录<a name="目录">
 * [引入](#引入)
+* [使用方式](#使用方式)
 * [换肤](#换肤)
 * [切换语言](#切换语言)
 * [注意](#注意)
@@ -30,93 +31,114 @@ dependencies {
 compile project(':QSkinLoaderlib')
 ```
 
+## 使用方式<a name="使用方式">
+两种方式，让View支持换肤框架
+* xml中添加标识
+
+    skin的命名空间
+    ```xml
+    xmlns:skin="http://schemas.android.com/android/skin"
+    ```
+    然后对所有需要换肤的View增加属性
+    ```xml
+    <View
+        skin:enable="true"
+    />
+    ```
+
+* 动态创建标识
+    ```java
+    SkinManager
+        .with(textview)
+        .setViewAttrs(SkinAttrName.BACKGROUND, R.color.white)
+        .addViewAttrs(SkinAttrName.TEXT_COLOR, R.color.black)
+        .applySkin(false);
+    ```
+
 ## 换肤<a name="换肤">
 **[传送门][传送门]**
 * 通过后缀查找当前应用中的资源，进行换肤
-```java
-/**
- * 通过后缀查找本应用中的资源，换肤
- *
- * @param skinIdentifier 后缀标识
- * @param listener 监听换肤成功或失败
- */
-public void changeSkinBySuffix(String skinIdentifier, OnSkinChangeListener listener)
-{
-    mIsSwitching = true;
-    mIsDefaultMode = false;
-    SkinManager.getInstance().loadSkin(skinIdentifier, new SuffixResourceLoader(mContext), new LoadSkinListener(listener));
-}
-```
+    ```java
+    /**
+     * 通过后缀查找本应用中的资源，换肤
+     *
+     * @param skinIdentifier 后缀标识
+     * @param listener 监听换肤成功或失败
+     */
+    public void changeSkinBySuffix(String skinIdentifier, OnSkinChangeListener listener)
+    {
+        mIsSwitching = true;
+        mIsDefaultMode = false;
+        SkinManager.getInstance().loadSkin(skinIdentifier, new SuffixResourceLoader(mContext), new LoadSkinListener(listener));
+    }
+    ```
 
 * 通过包名、后缀，查找指定的已安装应用中的资源，进行换肤
-```java
-/**
- * 通过包名、后缀查找指定的已安装应用中的资源，换肤
- *
- * @param packageName 包名
- * @param suffix 后缀标识
- * @param listener 监听换肤成功或失败
- */
-public void changeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
-{
-    mIsSwitching = true;
-    mIsDefaultMode = false;
-    SkinManager.getInstance().loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
-}
-```
+    ```java
+    /**
+     * 通过包名、后缀查找指定的已安装应用中的资源，换肤
+     *
+     * @param packageName 包名
+     * @param suffix 后缀标识
+     * @param listener 监听换肤成功或失败
+     */
+    public void changeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
+    {
+        mIsSwitching = true;
+        mIsDefaultMode = false;
+        SkinManager.getInstance().loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
+    }
+    ```
 
 * 恢复默认皮肤
-```java
-/**
- * 通过APK、包名、后缀换肤的方式，恢复默认皮肤
- *
- * @param listener 监听恢复成功或失败
- */
-public void restoreDefaultSkinByAPKOrPackageOrSuffix(OnSkinChangeListener listener)
-{
-    mIsSwitching = true;
-    mIsDefaultMode = true;
-    SkinManager.getInstance().restoreDefault(SkinConfigHelper.DEFAULT_SKIN, new LoadSkinListener(listener));
-}
-
-```
+    ```java
+    /**
+     * 通过APK、包名、后缀换肤的方式，恢复默认皮肤
+     *
+     * @param listener 监听恢复成功或失败
+     */
+    public void restoreDefaultSkinByAPKOrPackageOrSuffix(OnSkinChangeListener listener)
+    {
+        mIsSwitching = true;
+        mIsDefaultMode = true;
+        SkinManager.getInstance().restoreDefault(SkinConfigHelper.DEFAULT_SKIN, new LoadSkinListener(listener));
+    }
+    ```
 
 ## 切换语言<a name="切换语言">
-> * 首先切换语言配置
+* 首先切换语言配置
+    ```java
+    Configuration config = getResources().getConfiguration();
+    switch (position)
+    {
+    case 0:
+        config.locale = Locale.ENGLISH;
+        break;
 
-```java
-Configuration config = getResources().getConfiguration();
-switch (position)
-{
-case 0:
-    config.locale = Locale.ENGLISH;
-    break;
+    case 1:
+        config.locale = Locale.CHINESE;
+        break;
+    }
+    getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    ```
 
-case 1:
-    config.locale = Locale.CHINESE;
-    break;
-}
-getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-```
-
-> * 然后进行切换语言
-
-```java
-/**
- * 通过指定包名、后缀查找已安装应用中的资源，切换语言
- *
- * @param packageName 包名
- * @param suffix 后缀标识
- * @param listener 监听换肤成功或失败
- */
-public void changeLanguageConfigByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
-{
-    mIsSwitching = true;
-    mIsDefaultMode = false;
-    String local = mContext.getResources().getConfiguration().locale.toString();
-    SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new LoadSkinListener(listener));
-}
-```
+* 然后进行切换语言
+    ```java
+    /**
+     * 通过指定包名、后缀查找已安装应用中的资源，切换语言
+     *
+     * @param packageName 包名
+     * @param suffix 后缀标识
+     * @param listener 监听换肤成功或失败
+     */
+    public void changeLanguageConfigByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
+    {
+        mIsSwitching = true;
+        mIsDefaultMode = false;
+        String local = mContext.getResources().getConfiguration().locale.toString();
+        SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new LoadSkinListener(listener));
+    }
+    ```
 
 ## 注意<a name="注意">
 * 不支持保存换肤、切换语言，重启应用会恢复默认皮肤和语言，需要自行恢复已保存的皮肤和语言
