@@ -133,6 +133,13 @@ public class SkinChangeHelper
         SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new LoadSkinListener(listener));
     }
 
+    /**
+     * 通过指定包名、后缀查找已安装应用中的资源，切换字体大小
+     *
+     * @param packageName 包名
+     * @param suffix 后缀标识
+     * @param listener 监听换肤成功或失败
+     */
     public void changeSizeSkinByPackageSuffix(String packageName, String suffix, OnSkinChangeListener listener)
 	{
 		mIsSwitching = true;

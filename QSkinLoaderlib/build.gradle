@@ -43,7 +43,7 @@ publish {
     userOrg = 'veizhang'
     groupId = 'com.excellence'
     artifactId = 'skinloader'
-    publishVersion = '1.1.0'
+    publishVersion = '1.2.0'
     desc = 'Android多种场景的换肤框架'
     website = 'https://github.com/VeiZhang/QSkinLoader'
 }
