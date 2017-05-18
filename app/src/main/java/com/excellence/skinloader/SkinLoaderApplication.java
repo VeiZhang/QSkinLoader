@@ -46,6 +46,8 @@ public class SkinLoaderApplication extends Application
 		config.locale = locale;
 		getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 		SkinChangeHelper.getInstance().changeLanguageConfigByPackageSuffix(getPackageName(), "", null);
+		// 恢复默认字体
+		SkinChangeHelper.getInstance().changeSizeSkinByPackageSuffix(getPackageName(), SkinConfigHelper.getInstance().getSizeIdentifierSuffix(), null);
 	}
 
 	public static SkinLoaderApplication getInstance()

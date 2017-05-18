@@ -74,23 +74,13 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * get current skin identifier
+	 * is default skin
 	 *
-	 * @return
+	 * @return {@code true}:yes<br>{@code false}:no
 	 */
-	public String getSkinIdentifier()
+	public boolean isDefaultSkin()
 	{
-		return DBUtils.getString(mContext, CUSTOM_SKIN_IDENTIFIER, DEFAULT_SKIN);
-	}
-
-	/**
-	 * get current skin suffxi identifier
-	 *
-	 * @return
-	 */
-	public String getSkinIdentifierSuffix()
-	{
-		return DBUtils.getString(mContext, CUSTOM_SKIN_IDENTIFIER_SUFFIX, "");
+		return DEFAULT_SKIN.equals(getSkinIdentifier());
 	}
 
 	/**
@@ -116,13 +106,23 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * is default skin
+	 * get current skin identifier
 	 *
-	 * @return {@code true}:yes<br>{@code false}:no
+	 * @return
 	 */
-	public boolean isDefaultSkin()
+	public String getSkinIdentifier()
 	{
-		return DEFAULT_SKIN.equals(getSkinIdentifier());
+		return DBUtils.getString(mContext, CUSTOM_SKIN_IDENTIFIER, DEFAULT_SKIN);
+	}
+
+	/**
+	 * get current skin suffxi identifier
+	 *
+	 * @return
+	 */
+	public String getSkinIdentifierSuffix()
+	{
+		return DBUtils.getString(mContext, CUSTOM_SKIN_IDENTIFIER_SUFFIX, "");
 	}
 
 	/**
@@ -145,6 +145,16 @@ public class SkinConfigHelper
 		if (TextUtils.isEmpty(local) || local.equalsIgnoreCase("null"))
 			local = "";
 		DBUtils.setSetting(mContext, CUSTOM_LANGUAGE_LOCAL, local);
+	}
+
+	/**
+	 * get language identifier
+	 *
+	 * @return
+	 */
+	public String getLanguageIdentifier()
+	{
+		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_IDENTIFIER, null);
 	}
 
 	/**
@@ -174,6 +184,28 @@ public class SkinConfigHelper
 	 */
 	public void saveSizeIdentifierSuffix(String identifierSuffix)
 	{
+		if (TextUtils.isEmpty(identifierSuffix) || identifierSuffix.equalsIgnoreCase("null"))
+			identifierSuffix = "";
 		DBUtils.setSetting(mContext, CUSTOM_SIZE_IDENTIFIER_SUFFIX, identifierSuffix);
+	}
+
+	/**
+	 * get size identifier
+	 *
+	 * @return
+	 */
+	public String getSizeIdentifier()
+	{
+		return DBUtils.getString(mContext, CUSTOM_SIZE_IDENTIFIER);
+	}
+
+	/**
+	 * get size identifier suffix
+	 *
+	 * @return
+	 */
+	public String getSizeIdentifierSuffix()
+	{
+		return DBUtils.getString(mContext, CUSTOM_SIZE_IDENTIFIER_SUFFIX);
 	}
 }
