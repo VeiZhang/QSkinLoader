@@ -35,9 +35,10 @@ public interface ILoadSkinListener {
      * 需要保存语言标识
      *
      * @param languageIdentifier
+     * @param languageIdentifierSuffix
      * @param local
      */
-    void onLanguageLoadSuccess(String languageIdentifier, String local);
+    void onLanguageLoadSuccess(String languageIdentifier, String languageIdentifierSuffix, String local);
 
     /**
      * VeiZhang

@@ -280,7 +280,7 @@ public class SkinManagerImpl implements ISkinManager {
             Logging.d(TAG, "load()| current language matches target, do nothing");
             if(null != loadListener) {
                 // 需要保存包名标识、语言标识
-                loadListener.onLanguageLoadSuccess(newSkinIdentifier, languageLocal);
+                loadListener.onLanguageLoadSuccess(skinIdentifier, suffix, languageLocal);
             }
             return;
         }
@@ -303,7 +303,7 @@ public class SkinManagerImpl implements ISkinManager {
                 Logging.d(TAG, "onSkinLoadSuccess()| notify update");
                 if (loadListener != null) {
                     // 需要保存皮肤标识、后缀标识，后缀标识可为空
-                    loadListener.onLanguageLoadSuccess(newSkinIdentifier, languageLocal);
+                    loadListener.onLanguageLoadSuccess(skinIdentifier, suffix, languageLocal);
                 }
             }
 
@@ -347,7 +347,7 @@ public class SkinManagerImpl implements ISkinManager {
             Logging.d(TAG, "load()| current language matches target, do nothing");
             if(null != loadListener) {
                 // 需要保存包名标识、大小标识
-                loadListener.onSizeLoadSuccess(newSkinIdentifier, suffix);
+                loadListener.onSizeLoadSuccess(skinIdentifier, suffix);
             }
             return;
         }
@@ -370,7 +370,7 @@ public class SkinManagerImpl implements ISkinManager {
                 Logging.d(TAG, "onSkinLoadSuccess()| notify update");
                 if (loadListener != null) {
                     // 需要保存包名标识、大小后缀标识，后缀标识可为空
-                    loadListener.onSizeLoadSuccess(newSkinIdentifier, suffix);
+                    loadListener.onSizeLoadSuccess(skinIdentifier, suffix);
                 }
             }
 

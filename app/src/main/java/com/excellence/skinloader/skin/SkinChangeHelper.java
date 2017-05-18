@@ -178,12 +178,13 @@ public class SkinChangeHelper
 		}
 
 		@Override
-		public void onLanguageLoadSuccess(String languageIdentifier, String local)
+		public void onLanguageLoadSuccess(String languageIdentifier, String languageIdentifierSuffix, String local)
 		{
 			mIsSwitching = false;
 
 			// 存储语言标识
 			SkinConfigHelper.getInstance().saveLanguageIdentifier(languageIdentifier);
+			SkinConfigHelper.getInstance().saveLanguageIdentifierSuffix(languageIdentifierSuffix);
 			SkinConfigHelper.getInstance().saveLanguageLocal(local);
 
 			mHandler.post(new Runnable()

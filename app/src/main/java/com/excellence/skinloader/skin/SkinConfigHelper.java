@@ -37,6 +37,11 @@ public class SkinConfigHelper
 	public static final String CUSTOM_LANGUAGE_IDENTIFIER = PACKAGE_NAME + ".CUSTOM_LANGUAGE_IDENTIFIER";
 
 	/**
+	 * language identifier suffix
+	 */
+	public static final String CUSTOM_LANGUAGE_IDENTIFIER_SUFFIX = PACKAGE_NAME + ".CUSTOM_LANGUAGE_IDENTIFIER_SUFFIX";
+
+	/**
 	 * language local identifier
 	 */
 	public static final String CUSTOM_LANGUAGE_LOCAL = PACKAGE_NAME + ".CUSTOM_LANGUAGE_LOCAL";
@@ -84,7 +89,7 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * save skin identifier
+	 * save skin identifier : packageName
 	 *
 	 * @param identifier
 	 */
@@ -106,7 +111,7 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * get current skin identifier
+	 * get current skin identifier : packageName
 	 *
 	 * @return
 	 */
@@ -116,7 +121,7 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * get current skin suffxi identifier
+	 * get current skin suffix identifier
 	 *
 	 * @return
 	 */
@@ -126,13 +131,23 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * save language identifier
+	 * save language identifier : packageName
 	 *
 	 * @param identifier
 	 */
 	public void saveLanguageIdentifier(String identifier)
 	{
 		DBUtils.setSetting(mContext, CUSTOM_LANGUAGE_IDENTIFIER, identifier);
+	}
+
+	/**
+	 * save language suffix identifier
+	 *
+	 * @param identifierSuffix
+	 */
+	public void saveLanguageIdentifierSuffix(String identifierSuffix)
+	{
+		DBUtils.setSetting(mContext, CUSTOM_LANGUAGE_IDENTIFIER_SUFFIX, identifierSuffix);
 	}
 
 	/**
@@ -154,7 +169,17 @@ public class SkinConfigHelper
 	 */
 	public String getLanguageIdentifier()
 	{
-		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_IDENTIFIER, null);
+		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_IDENTIFIER, "");
+	}
+
+	/**
+	 * get language suffix identifier : packageName
+	 *
+	 * @return
+	 */
+	public String getLanguageIdentifierSuffix()
+	{
+		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_IDENTIFIER_SUFFIX, "");
 	}
 
 	/**
@@ -164,11 +189,11 @@ public class SkinConfigHelper
 	 */
 	public String getLanguageLocal()
 	{
-		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_LOCAL, null);
+		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_LOCAL, "");
 	}
 
 	/**
-	 * save size identifier
+	 * save size identifier : packageName
 	 *
 	 * @param identifier
 	 */
@@ -178,7 +203,7 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * save size identifier suffix
+	 * save size suffix identifier
 	 *
 	 * @param identifierSuffix
 	 */
@@ -190,22 +215,22 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * get size identifier
+	 * get size identifier : packageName
 	 *
 	 * @return
 	 */
 	public String getSizeIdentifier()
 	{
-		return DBUtils.getString(mContext, CUSTOM_SIZE_IDENTIFIER);
+		return DBUtils.getString(mContext, CUSTOM_SIZE_IDENTIFIER, "");
 	}
 
 	/**
-	 * get size identifier suffix
+	 * get size suffix identifier
 	 *
 	 * @return
 	 */
 	public String getSizeIdentifierSuffix()
 	{
-		return DBUtils.getString(mContext, CUSTOM_SIZE_IDENTIFIER_SUFFIX);
+		return DBUtils.getString(mContext, CUSTOM_SIZE_IDENTIFIER_SUFFIX, "");
 	}
 }
