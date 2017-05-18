@@ -27,12 +27,22 @@ class SkinAttributeParser implements ISkinAttributeParser {
 
     private static final String TAG = "SkinAttributeParser";
 
+    /**
+     * VeiZhang
+     * 是否默认支持所有的View换肤
+     */
+    private boolean mIsSupportAllViewSkin = false;
+
+    public SkinAttributeParser(boolean isSupportAllViewSkin) {
+        mIsSupportAllViewSkin = isSupportAllViewSkin;
+    }
+
     public boolean isSupportSkin(String name, Context context, AttributeSet attrs) {
         //只有View设置了skin:enable，才解析属性
         boolean isSkinEnable = attrs.getAttributeBooleanValue(
                 SkinConstant.XML_NAMESPACE,
                 SkinConstant.ATTR_SKIN_ENABLE,
-                false);
+                mIsSupportAllViewSkin);
         return isSkinEnable;
     }
 

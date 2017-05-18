@@ -29,6 +29,16 @@ public interface ISkinActivity {
      */
     boolean isSupportSkinChange();
 
+    /**
+     * VeiZhang
+     * 是否默认支持所有的View换肤
+     *
+     * @return {@code true}:是，则不用添加skin:enable="true"，不想支持则设置skin:enable="false"
+     *         <br>
+     *         {@code false}:否，对需要换肤的View需要添加skin:enable="true"
+     */
+    boolean isSupportAllViewSkin();
+
     /***
      * 刷新皮肤；
      * 此处刷新的是皮肤框架管理之外的界面

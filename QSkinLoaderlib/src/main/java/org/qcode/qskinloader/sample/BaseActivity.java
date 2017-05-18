@@ -34,6 +34,7 @@ public abstract class BaseActivity extends Activity implements ISkinActivity
 		mSkinEventHandler = SkinManager.newActivitySkinEventHandler()
                 .setSwitchSkinImmediately(isSwitchSkinImmediately())
                 .setSupportSkinChange(isSupportSkinChange())
+				.setSupportAllViewSkin(isSupportAllViewSkin())
 				.setWindowBackgroundResource(getWindowBackgroundResource())
                 .setNeedDelegateViewCreate(true);
 		mSkinEventHandler.onCreate(this);
@@ -109,6 +110,17 @@ public abstract class BaseActivity extends Activity implements ISkinActivity
 	public boolean isSwitchSkinImmediately()
 	{
 		return false;
+	}
+
+	/**
+	 * true：默认支持所有View换肤，不用添加skin:enable="true"，不想支持则设置skin:enable="false"
+	 * false：默认不支持所有View换肤，对需要换肤的View添加skin:enable="true"
+	 *
+	 * @return
+	 */
+	@Override
+	public boolean isSupportAllViewSkin() {
+		return true;
 	}
 
 	/**

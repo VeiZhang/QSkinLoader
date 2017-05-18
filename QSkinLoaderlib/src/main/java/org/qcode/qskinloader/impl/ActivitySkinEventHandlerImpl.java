@@ -35,6 +35,12 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
     //当前界面是否支持皮肤变化
     private boolean mIsSupportSkinChange;
 
+    /**
+     * VeiZhang
+     * 是否默认支持所有的View换肤
+     */
+    private boolean mIsSupportAllViewSkin = false;
+
     private WeakReference<Activity> mActivity = null;
     private int mWindowBgResId = -1;
     private SkinInflaterFactoryImpl mSkinInflaterFactoryImpl;
@@ -166,6 +172,12 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
     }
 
     @Override
+    public IActivitySkinEventHandler setSupportAllViewSkin(boolean supportAllViewSkin) {
+        mIsSupportAllViewSkin = supportAllViewSkin;
+        return this;
+    }
+
+    @Override
     public void handleSkinUpdate() {
         if (!mIsSupportSkinChange) {
             Logging.d(TAG, "onThemeUpdate()| not support theme change: " + getClass().getSimpleName());
@@ -216,7 +228,7 @@ public class ActivitySkinEventHandlerImpl implements IActivitySkinEventHandler {
     @Override
     public ISkinAttributeParser getSkinAttributeParser() {
         if(null == mSkinAttributeParser) {
-            mSkinAttributeParser = new SkinAttributeParser();
+            mSkinAttributeParser = new SkinAttributeParser(mIsSupportAllViewSkin);
         }
 
         return mSkinAttributeParser;

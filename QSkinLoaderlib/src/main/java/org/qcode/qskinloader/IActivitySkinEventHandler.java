@@ -102,6 +102,15 @@ public interface IActivitySkinEventHandler {
      */
     IActivitySkinEventHandler setSupportSkinChange(boolean supportChange);
 
+    /**
+     * VeiZhang
+     * 是否默认支持所有的View换肤
+     *
+     * @param supportAllViewSkin
+     * @return
+     */
+    IActivitySkinEventHandler setSupportAllViewSkin(boolean supportAllViewSkin);
+
     /***
      * 告知当前界面的Window的背景色，需要传入资源id;
      * onCreate之前调用
