@@ -50,9 +50,10 @@ public class SkinLoaderApplication extends Application
 	{
 		Configuration config = getResources().getConfiguration();
 		Locale locale = Locale.getDefault();
-		String language = mSkinConfigHelper.getLanguageLocal();
-		if (!TextUtils.isEmpty(language))
-			locale = new Locale(language);
+		String saveLocaleLang = mSkinConfigHelper.getLanguageLocaleLang();
+		String saveLocaleCountry = mSkinConfigHelper.getLanguageLocaleCountry();
+		if (!TextUtils.isEmpty(saveLocaleLang))
+			locale = new Locale(saveLocaleLang, saveLocaleCountry);
 		config.locale = locale;
 		getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 		mSkinChangeHelper.changeLanguageConfigByPackageSuffix(mSkinConfigHelper.getLanguageIdentifier(), mSkinConfigHelper.getLanguageIdentifierSuffix(), null);

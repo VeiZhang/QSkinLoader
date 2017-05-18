@@ -42,10 +42,14 @@ public class SkinConfigHelper
 	public static final String CUSTOM_LANGUAGE_IDENTIFIER_SUFFIX = PACKAGE_NAME + ".CUSTOM_LANGUAGE_IDENTIFIER_SUFFIX";
 
 	/**
-	 * language local identifier
+	 * language locale lang identifier
 	 */
-	public static final String CUSTOM_LANGUAGE_LOCAL = PACKAGE_NAME + ".CUSTOM_LANGUAGE_LOCAL";
+	public static final String CUSTOM_LANGUAGE_LOCALE_LANG = PACKAGE_NAME + ".CUSTOM_LANGUAGE_LOCALE_LANG";
 
+	/**
+	 * language locale country identifier
+	 */
+	public static final String CUSTOM_LANGUAGE_LOCALE_COUNTRY = PACKAGE_NAME + ".CUSTOM_LANGUAGE_LOCALE_COUNTRY";
 	/**
 	 * size identifier
 	 */
@@ -151,19 +155,31 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * save language local identifier
+	 * save language locale lang identifier
 	 *
-	 * @param local
+	 * @param lang
 	 */
-	public void saveLanguageLocal(String local)
+	public void saveLanguageLocaleLang(String lang)
 	{
-		if (TextUtils.isEmpty(local) || local.equalsIgnoreCase("null"))
-			local = "";
-		DBUtils.setSetting(mContext, CUSTOM_LANGUAGE_LOCAL, local);
+		if (TextUtils.isEmpty(lang) || lang.equalsIgnoreCase("null"))
+			lang = "";
+		DBUtils.setSetting(mContext, CUSTOM_LANGUAGE_LOCALE_LANG, lang);
 	}
 
 	/**
-	 * get language identifier
+	 * save language locale country identifier
+	 *
+	 * @param country
+	 */
+	public void saveLanguageLocaleCountry(String country)
+	{
+		if (TextUtils.isEmpty(country) || country.equalsIgnoreCase("null"))
+			country = "";
+		DBUtils.setSetting(mContext, CUSTOM_LANGUAGE_LOCALE_COUNTRY, country);
+	}
+
+	/**
+	 * get language identifier : packageName
 	 *
 	 * @return
 	 */
@@ -173,7 +189,7 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * get language suffix identifier : packageName
+	 * get language suffix identifier
 	 *
 	 * @return
 	 */
@@ -183,13 +199,23 @@ public class SkinConfigHelper
 	}
 
 	/**
-	 * get language local
+	 * get language locale lang
 	 *
 	 * @return
 	 */
-	public String getLanguageLocal()
+	public String getLanguageLocaleLang()
 	{
-		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_LOCAL, "");
+		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_LOCALE_LANG, "");
+	}
+
+	/**
+	 * get language locale country
+	 *
+	 * @return
+	 */
+	public String getLanguageLocaleCountry()
+	{
+		return DBUtils.getString(mContext, CUSTOM_LANGUAGE_LOCALE_COUNTRY, "");
 	}
 
 	/**

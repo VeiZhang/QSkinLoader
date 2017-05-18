@@ -10,6 +10,8 @@ import org.qcode.qskinloader.ILoadSkinListener;
 import org.qcode.qskinloader.SkinManager;
 import org.qcode.qskinloader.resourceloader.impl.SuffixResourceLoader;
 
+import java.util.Locale;
+
 /**
  * <pre>
  *     author : VeiZhang
@@ -26,6 +28,7 @@ public class SkinChangeHelper
 	private static volatile SkinChangeHelper mInstance;
 	private final Context mContext;
 	private Handler mHandler = null;
+    private SkinConfigHelper mSkinConfigHelper = null;
 	private volatile boolean mIsDefaultMode = false;
 	private volatile boolean mIsSwitching = false;
 
@@ -33,7 +36,8 @@ public class SkinChangeHelper
 	{
 		mContext = SkinLoaderApplication.getInstance();
 		mHandler = new Handler(Looper.getMainLooper());
-		mIsDefaultMode = SkinConfigHelper.getInstance().isDefaultSkin();
+        mSkinConfigHelper = SkinConfigHelper.getInstance();
+		mIsDefaultMode = mSkinConfigHelper.isDefaultSkin();
 	}
 
 	public static SkinChangeHelper getInstance()
@@ -168,8 +172,8 @@ public class SkinChangeHelper
 			mIsSwitching = false;
 
 			// 存储皮肤标识
-			SkinConfigHelper.getInstance().saveSkinIdentifier(skinIdentifier);
-			SkinConfigHelper.getInstance().saveSkinIdentifierSuffix(suffix);
+            mSkinConfigHelper.saveSkinIdentifier(skinIdentifier);
+            mSkinConfigHelper.saveSkinIdentifierSuffix(suffix);
 
 			mHandler.post(new Runnable()
 			{
@@ -190,9 +194,11 @@ public class SkinChangeHelper
 			mIsSwitching = false;
 
 			// 存储语言标识
-			SkinConfigHelper.getInstance().saveLanguageIdentifier(languageIdentifier);
-			SkinConfigHelper.getInstance().saveLanguageIdentifierSuffix(languageIdentifierSuffix);
-			SkinConfigHelper.getInstance().saveLanguageLocal(local);
+            Locale languageLocale = mContext.getResources().getConfiguration().locale;
+            mSkinConfigHelper.saveLanguageIdentifier(languageIdentifier);
+            mSkinConfigHelper.saveLanguageIdentifierSuffix(languageIdentifierSuffix);
+            mSkinConfigHelper.saveLanguageLocaleLang(languageLocale.getLanguage());
+            mSkinConfigHelper.saveLanguageLocaleCountry(languageLocale.getCountry());
 
 			mHandler.post(new Runnable()
 			{
@@ -212,8 +218,8 @@ public class SkinChangeHelper
 			mIsSwitching = false;
 
 			// 存储字体大小标识
-			SkinConfigHelper.getInstance().saveSizeIdentifier(sizeIdentifier);
-			SkinConfigHelper.getInstance().saveSizeIdentifierSuffix(suffix);
+            mSkinConfigHelper.saveSizeIdentifier(sizeIdentifier);
+            mSkinConfigHelper.saveSizeIdentifierSuffix(suffix);
 
 			mHandler.post(new Runnable()
 			{
