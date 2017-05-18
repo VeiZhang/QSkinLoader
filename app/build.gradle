@@ -26,7 +26,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.0'
     testCompile 'junit:junit:4.12'
+    /**本地依赖，用于拓展集成**/
     compile project(':QSkinLoaderlib')
-    // compile 'com.excellence:skinloader:1.1.0'
+    /**远程依赖，方便引用，推荐使用这种方式**/
+    // compile 'com.excellence:skinloader:1.2.1'
     compile 'com.excellence:basetools:1.2.2'
 }
