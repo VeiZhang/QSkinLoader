@@ -10,10 +10,12 @@
 
 ## 目录<a name="目录">
 * [引入](#引入)
-* [使用方式](#使用方式)
-* [换肤](#换肤)
-* [切换语言](#切换语言)
-* [切换字体大小](#切换字体大小)
+* [源功能](#源功能)
+    * [使用方式](#使用方式)
+    * [换肤](#换肤)
+* [拓展](#拓展)
+    * [切换语言](#切换语言)
+    * [切换字体大小](#切换字体大小)
 * [注意](#注意)
 * [版本更新](#版本更新)
 * [感谢](#感谢)
@@ -22,7 +24,7 @@
 AndroidStudio添加jCenter远程依赖到module里的build.gradle：
 ```
 dependencies {
-    compile 'com.excellence:skinloader:1.2.0'
+    compile 'com.excellence:skinloader:1.2.1'
     // 或者直接使用最新版本
     // compile 'com.excellence:skinloader:+'
 }
@@ -32,11 +34,53 @@ dependencies {
 compile project(':QSkinLoaderlib')
 ```
 
-## 使用方式<a name="使用方式">
+<br>
+
+## 源功能<a name="源功能">
+
+### **[大神传送门][传送门]**
+
+
+### 使用方式<a name="使用方式">
 * 继承BaseActivity
     ```
     示例如org.qcode.qskinloader.sample.BaseActivity;
     让每个界面支持换肤，需要实现ISkinActivity接口
+    ```
+* BaseActivity中开启换肤控制
+    ```java
+    /**
+     * 告知当前界面是否支持换肤
+     *
+     * @return {@code true}:支持换肤<br>{@code false}:不支持
+     */
+    @Override
+    public boolean isSupportSkinChange()
+    {
+        return true;
+    }
+
+    /**
+     * 告知当切换皮肤时，是否立刻刷新当前界面，减轻换肤时性能压力
+     *
+     * @return {@code true}:立刻刷新<br>{@code false}:表示在界面onResume时刷新
+     */
+    @Override
+    public boolean isSwitchSkinImmediately()
+    {
+        return false;
+    }
+
+    /**
+     * true：默认支持所有View换肤，不用添加skin:enable="true"，不想支持则设置skin:enable="false"
+     * false：默认不支持所有View换肤，对需要换肤的View添加skin:enable="true"
+     *
+     * @return
+     */
+    @Override
+    public boolean isSupportAllViewSkin() {
+        return true;
+    }
     ```
 
 两种方式，让View支持换肤框架
@@ -62,8 +106,7 @@ compile project(':QSkinLoaderlib')
         .applySkin(false);
     ```
 
-## 换肤<a name="换肤">
-**[传送门][传送门]**
+### 换肤<a name="换肤">
 * 通过后缀查找当前应用中的资源，进行换肤
     ```java
     /**
@@ -112,7 +155,9 @@ compile project(':QSkinLoaderlib')
     }
     ```
 
-## 切换语言<a name="切换语言">
+## 拓展
+
+### 切换语言<a name="切换语言">
 * 首先切换语言配置
     ```java
     Configuration config = getResources().getConfiguration();
@@ -147,7 +192,7 @@ compile project(':QSkinLoaderlib')
     }
     ```
 
-## 切换字体大小<a name="切换字体大小">
+### 切换字体大小<a name="切换字体大小">
 * 传入标识
     ```java
     String suffix = "";
@@ -205,6 +250,7 @@ compile project(':QSkinLoaderlib')
 ## 版本更新<a name="版本更新">
 | 版本 | 描述 | 日期 |
 | --- | ---- | --- |
+| [1.2.1][SkinLoaderV1.2.1] | 是否默认支持所有的View换肤 | **2017-5-18** |
 | [1.2.0][SkinLoaderV1.2.0] | 集成TextView切换字体大小功能，支持弹窗里TextView字体大小切换 | **2017-5-18** |
 | [1.1.0][SkinLoaderV1.1.0] | 切换语言，切换Activity、Fragment、弹窗里TextView文本语言 | **2017-5-15** |
 | [1.0.0][SkinLoaderV1.0.0] | 换肤，切换Activity、Fragment、弹窗里View的背景、颜色、图片 | **2017-5-12** |
@@ -215,11 +261,12 @@ compile project(':QSkinLoaderlib')
 > - [fengtianyou][fengtianyou]
 
 [Bintray]:https://bintray.com/veizhang/maven/skinloader "Bintray"
-[icon_Bintray]:https://img.shields.io/badge/Bintray-v1.2.0-brightgreen.svg
+[icon_Bintray]:https://img.shields.io/badge/Bintray-v1.2.1-brightgreen.svg
 [传送门]:https://github.com/VeiZhang/QSkinLoader/tree/VeiZhang/README
 [QSkinLoader]:https://github.com/qqliu10u/QSkinLoader
 [fengtianyou]:https://github.com/fengtianyou
 
+[SkinLoaderV1.2.1]:https://bintray.com/veizhang/maven/skinloader/1.2.1
 [SkinLoaderV1.2.0]:https://bintray.com/veizhang/maven/skinloader/1.2.0
 [SkinLoaderV1.1.0]:https://bintray.com/veizhang/maven/skinloader/1.1.0
 [SkinLoaderV1.0.0]:https://bintray.com/veizhang/maven/skinloader/1.0.0
