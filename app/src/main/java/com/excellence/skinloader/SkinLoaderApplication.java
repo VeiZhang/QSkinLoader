@@ -31,7 +31,6 @@ public class SkinLoaderApplication extends Application
 		mInstance = this;
 		mSkinChangeHelper = SkinChangeHelper.getInstance();
 		mSkinConfigHelper = SkinConfigHelper.getInstance();
-		mSkinChangeHelper.init();
 
 		// 恢复保存皮肤
 		restoreSkin();

@@ -7,6 +7,7 @@ import android.os.Looper;
 import com.excellence.skinloader.SkinLoaderApplication;
 
 import org.qcode.qskinloader.ILoadSkinListener;
+import org.qcode.qskinloader.ISkinManager;
 import org.qcode.qskinloader.SkinManager;
 import org.qcode.qskinloader.resourceloader.impl.SuffixResourceLoader;
 
@@ -29,6 +30,7 @@ public class SkinChangeHelper
 	private final Context mContext;
 	private Handler mHandler = null;
     private SkinConfigHelper mSkinConfigHelper = null;
+    private ISkinManager mSkinManager = null;
 	private volatile boolean mIsDefaultMode = false;
 	private volatile boolean mIsSwitching = false;
 
@@ -38,7 +40,9 @@ public class SkinChangeHelper
 		mHandler = new Handler(Looper.getMainLooper());
         mSkinConfigHelper = SkinConfigHelper.getInstance();
 		mIsDefaultMode = mSkinConfigHelper.isDefaultSkin();
-	}
+        mSkinManager = SkinManager.getInstance();
+        mSkinManager.init(mContext);
+    }
 
 	public static SkinChangeHelper getInstance()
 	{
@@ -53,14 +57,6 @@ public class SkinChangeHelper
 			}
 		}
 		return mInstance;
-	}
-
-	/**
-	 * 初始化换肤框架
-	 */
-	public void init()
-	{
-		SkinManager.getInstance().init(mContext);
 	}
 
 	/**
@@ -92,7 +88,7 @@ public class SkinChangeHelper
 	{
 		mIsSwitching = true;
 		mIsDefaultMode = true;
-		SkinManager.getInstance().restoreDefault(SkinConfigHelper.DEFAULT_SKIN, new LoadSkinListener(listener));
+		mSkinManager.restoreDefault(SkinConfigHelper.DEFAULT_SKIN, new LoadSkinListener(listener));
 	}
 
 	/**
@@ -105,7 +101,7 @@ public class SkinChangeHelper
 	{
 		mIsSwitching = true;
 		mIsDefaultMode = false;
-		SkinManager.getInstance().loadSkin(skinIdentifier, new SuffixResourceLoader(mContext), new LoadSkinListener(listener));
+		mSkinManager.loadSkin(skinIdentifier, new SuffixResourceLoader(mContext), new LoadSkinListener(listener));
 	}
 
 	/**
@@ -119,7 +115,7 @@ public class SkinChangeHelper
 	{
 		mIsSwitching = true;
 		mIsDefaultMode = false;
-		SkinManager.getInstance().loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
+		mSkinManager.loadAPKSkin(packageName, suffix, new LoadSkinListener(listener));
 	}
 
 	/**
@@ -134,7 +130,7 @@ public class SkinChangeHelper
         mIsSwitching = true;
         mIsDefaultMode = false;
         String local = mContext.getResources().getConfiguration().locale.toString();
-        SkinManager.getInstance().loadLanguageSkin(packageName, local, suffix, new LoadSkinListener(listener));
+        mSkinManager.loadLanguageSkin(packageName, local, suffix, new LoadSkinListener(listener));
     }
 
     /**
@@ -148,7 +144,7 @@ public class SkinChangeHelper
 	{
 		mIsSwitching = true;
 		mIsDefaultMode = false;
-		SkinManager.getInstance().loadSizeSkin(packageName, suffix, new LoadSkinListener(listener));
+		mSkinManager.loadSizeSkin(packageName, suffix, new LoadSkinListener(listener));
 	}
 
 	private class LoadSkinListener implements ILoadSkinListener
