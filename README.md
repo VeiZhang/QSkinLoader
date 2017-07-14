@@ -24,7 +24,7 @@
 AndroidStudio添加jCenter远程依赖到module里的build.gradle：
 ```
 dependencies {
-    compile 'com.excellence:skinloader:1.2.1'
+    compile 'com.excellence:skinloader:1.2.2'
     // 或者直接使用最新版本
     // compile 'com.excellence:skinloader:+'
 }
@@ -250,6 +250,7 @@ compile project(':QSkinLoaderlib')
 ## 版本更新<a name="版本更新">
 | 版本 | 描述 | 日期 |
 | --- | ---- | --- |
+| [1.2.2][SkinLoaderV1.2.2] | 优化换肤、换语言、换字体，减少资源未找到的异常抛出 | **2017-7-14** |
 | [1.2.1][SkinLoaderV1.2.1] | 是否默认支持所有的View换肤 | **2017-5-18** |
 | [1.2.0][SkinLoaderV1.2.0] | 集成TextView切换字体大小功能，支持弹窗里TextView字体大小切换 | **2017-5-18** |
 | [1.1.0][SkinLoaderV1.1.0] | 切换语言，切换Activity、Fragment、弹窗里TextView文本语言 | **2017-5-15** |
@@ -261,11 +262,12 @@ compile project(':QSkinLoaderlib')
 > - [fengtianyou][fengtianyou]
 
 [Bintray]:https://bintray.com/veizhang/maven/skinloader "Bintray"
-[icon_Bintray]:https://img.shields.io/badge/Bintray-v1.2.1-brightgreen.svg
+[icon_Bintray]:https://img.shields.io/badge/Bintray-v1.2.2-brightgreen.svg
 [传送门]:https://github.com/VeiZhang/QSkinLoader/tree/VeiZhang/README
 [QSkinLoader]:https://github.com/qqliu10u/QSkinLoader
 [fengtianyou]:https://github.com/fengtianyou
 
+[SkinLoaderV1.2.2]:https://bintray.com/veizhang/maven/skinloader/1.2.2
 [SkinLoaderV1.2.1]:https://bintray.com/veizhang/maven/skinloader/1.2.1
 [SkinLoaderV1.2.0]:https://bintray.com/veizhang/maven/skinloader/1.2.0
 [SkinLoaderV1.1.0]:https://bintray.com/veizhang/maven/skinloader/1.1.0
