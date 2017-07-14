@@ -168,6 +168,8 @@ class SkinAttributeParser implements ISkinAttributeParser {
 
     private SkinAttr getSkinAttrFromId(Context context, String attrName, String attrValue) {
         int id = Integer.parseInt(attrValue.substring(1));
+        if (id == 0)
+            return null;
         String entryName = context.getResources().getResourceEntryName(id);
         String typeName = context.getResources().getResourceTypeName(id);
         return SkinAttrFactory.newSkinAttr(attrName, id, entryName, typeName);

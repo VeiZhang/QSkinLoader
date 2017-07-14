@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 
 import org.qcode.qskinloader.IResourceManager;
 import org.qcode.qskinloader.base.utils.HashMapCache;
+import org.qcode.qskinloader.base.utils.ResourceUtils;
 import org.qcode.qskinloader.entity.SkinConstant;
 
 /**
@@ -71,8 +72,7 @@ public class APKResourceManager implements IResourceManager {
         }
 
         String trueResName = appendSuffix(resName);
-        int trueResId = mResources.getIdentifier(
-                trueResName, SkinConstant.RES_TYPE_NAME_COLOR, mPackageName);
+        int trueResId = ResourceUtils.getIdentifier(mResources, trueResName, SkinConstant.RES_TYPE_NAME_COLOR, mPackageName, resName);
         int trueColor = mResources.getColor(trueResId);
         mColorCache.addCache(resKey, trueColor);
         return trueColor;
@@ -86,16 +86,7 @@ public class APKResourceManager implements IResourceManager {
     @SuppressLint("NewApi")
     public Drawable getDrawable(int resId, String resName) {
         String trueResName = appendSuffix(resName);
-        int trueResId = mResources.getIdentifier(trueResName,
-                SkinConstant.RES_TYPE_NAME_DRAWABLE, mPackageName);
-
-        if (0 == trueResId) {
-            trueResId = mResources.getIdentifier(trueResName,
-                    SkinConstant.RES_TYPE_NAME_MIPMAP, mPackageName);
-            if (0 == trueResId) {
-                throw new Resources.NotFoundException(resName);
-            }
-        }
+        int trueResId = ResourceUtils.getIdentifier(mResources, trueResName, mPackageName, resName, SkinConstant.RES_TYPE_NAME_DRAWABLE, SkinConstant.RES_TYPE_NAME_MIPMAP);
 
         Drawable trueDrawable;
         if (android.os.Build.VERSION.SDK_INT < 22) {
@@ -126,11 +117,8 @@ public class APKResourceManager implements IResourceManager {
     @Override
     public ColorStateList getColorStateList(int resId, String typeName, String resName) {
         String trueResName = appendSuffix(resName);
-        int trueResId = mResources.getIdentifier(
-                trueResName, typeName, mPackageName);
-        ColorStateList colorList = mResources.getColorStateList(trueResId);
-
-        return colorList;
+        int trueResId = ResourceUtils.getIdentifier(mResources, trueResName, typeName, mPackageName, resName);
+        return mResources.getColorStateList(trueResId);
     }
 
     /** VeiZhang Text **/
@@ -138,18 +126,16 @@ public class APKResourceManager implements IResourceManager {
 	public String getString(int resId, String typeName, String resName)
 	{
 		String trueResName = appendSuffix(resName);
-		int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
-		String text = mResources.getString(trueResId);
-		return text;
+        int trueResId = ResourceUtils.getIdentifier(mResources, trueResName, typeName, mPackageName, resName);
+		return mResources.getString(trueResId);
 	}
 
     /** VeiZhang TextSize **/
     @Override
-    public int getDimen(int resId, String typeName, String resName) throws Resources.NotFoundException {
+    public int getDimen(int resId, String typeName, String resName) {
         String trueResName = appendSuffix(resName);
-        int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
-        int size = mResources.getDimensionPixelOffset(trueResId);
-        return size;
+        int trueResId = ResourceUtils.getIdentifier(mResources, trueResName, typeName, mPackageName, resName);
+        return mResources.getDimensionPixelOffset(trueResId);
     }
 
     private String getResKey(String skinPackageName, String resName) {
