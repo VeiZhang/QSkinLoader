@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import org.qcode.qskinloader.IResourceManager;
+import org.qcode.qskinloader.base.utils.ResourceUtils;
 
 /**
  * <pre>
@@ -99,19 +100,14 @@ public class LanguageResourceManager implements IResourceManager {
     public String getString(int resId, String typeName, String resName)
     {
         String trueResName = appendSuffix(resName);
-        int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
-        String text = mResources.getString(trueResId);
-        return text;
+        int trueResId = ResourceUtils.getIdentifier(mResources, trueResName, typeName, mPackageName, resName);
+        return mResources.getString(trueResId);
     }
 
     /** VeiZhang TextSize **/
     @Override
     public int getDimen(int resId, String typeName, String resName) throws Resources.NotFoundException {
         return 0;
-    }
-
-    private String getResKey(String skinPackageName, String resName) {
-        return (null == skinPackageName ? "" : skinPackageName) + "_" + resName;
     }
 
     private String appendSuffix(String resName) {

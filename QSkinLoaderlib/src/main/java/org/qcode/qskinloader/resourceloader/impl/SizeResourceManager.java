@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import org.qcode.qskinloader.IResourceManager;
+import org.qcode.qskinloader.base.utils.ResourceUtils;
 
 /**
  * <pre>
@@ -115,15 +116,9 @@ public class SizeResourceManager implements IResourceManager
 	@Override
 	public int getDimen(int resId, String typeName, String resName) throws Resources.NotFoundException
 	{
-        String trueResName = appendSuffix(resName);
-        int trueResId = mResources.getIdentifier(trueResName, typeName, mPackageName);
-        int size = mResources.getDimensionPixelOffset(trueResId);
-        return size;
-	}
-
-	private String getResKey(String skinPackageName, String resName)
-	{
-		return (null == skinPackageName ? "" : skinPackageName) + "_" + resName;
+		String trueResName = appendSuffix(resName);
+		int trueResId = ResourceUtils.getIdentifier(mResources, trueResName, typeName, mPackageName, resName);
+		return mResources.getDimensionPixelOffset(trueResId);
 	}
 
 	private String appendSuffix(String resName)
