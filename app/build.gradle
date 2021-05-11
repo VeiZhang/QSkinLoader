@@ -1,34 +1,37 @@
-apply plugin: 'com.android.application'
+apply from: 'https://gist.githubusercontent.com/VeiZhang/01779005843bc5b70b11551ca13c2ced/raw/application.gradle'
+
+def libs = rootProject.ext.dependencies
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.excellence.skinloader"
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
 }
 
+configurations.all {
+    // 不使用缓存，使用仓库中最新的包
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    testCompile 'junit:junit:4.12'
-    /**本地依赖，用于拓展集成**/
-    compile project(':QSkinLoaderlib')
-    /**远程依赖，方便引用，推荐使用这种方式**/
-    // compile 'com.excellence:skinloader:1.2.1'
-    compile 'com.excellence:basetools:1.2.2'
+    testImplementation 'junit:junit:4.12'
+    implementation libs["recyclerview-v7"]
+    implementation libs["appcompat-v7"]
+//    implementation libs["basetools"]
+
+    /**可以使用远程库或者使用本地Module Library*/
+    /**远程库**/
+    // implementation 'com.excellence:skinloader:_latestVersion'
+    /**或者使用+，自动使用最新依赖包**/
+    // implementation 'com.excellence:skinloader:+'
+    /**本地Library**/
+    implementation project(':QSkinLoaderlib')
+
+    /** Github packages **/
+//    implementation('com.excellence:skinloader:1.2.1') {
+//        changing = true
+//    }
 }
