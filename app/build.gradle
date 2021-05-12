@@ -20,6 +20,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation libs["recyclerview-v7"]
     implementation libs["appcompat-v7"]
+    implementation 'com.excellence:basetools:1.2.2'
 //    implementation libs["basetools"]
 
     /**可以使用远程库或者使用本地Module Library*/

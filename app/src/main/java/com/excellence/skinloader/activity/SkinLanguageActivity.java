@@ -71,7 +71,7 @@ public class SkinLanguageActivity extends BaseActivity implements AdapterView.On
 
 		public LanguageAdapter(Context context, String[] datas, @LayoutRes int layoutId)
 		{
-			super(datas, layoutId);
+			super(context, datas, layoutId);
 		}
 
 		@Override
